@@ -1,11 +1,25 @@
-binary: main.o libmySimpleComputer.a
-	g++ -Wall -Werror -o binary main.o -L. -lmySimpleComputer
-main.o: main.cpp
-	g++ -Wall -Werror -c main.cpp -o main.o
-mySimpleComputer.o: mySimpleComputer.cpp
-	g++ -Wall -Werror -c mySimpleComputer.cpp -o mySimpleComputer.o
-libmySimpleComputer.a: mySimpleComputer.o
-	ar rc libmySimpleComputer.a mySimpleComputer.o
+FLAGS += -Wall -Werror --std=c++17
+USER_DIR_S = build
+EXECUTABLE = bin/program
+
+.PHONY: all clean
+
+$(EXECUTABLE): $(USER_DIR_S)/main.o $(USER_DIR_S)/libmySimpleComputer.a
+	g++ $(FLAGS) -o $@ $^ -Lbuild -lmySimpleComputer
+
+$(USER_DIR_S)/main.o: src/main.cpp
+	g++ $(FLAGS) -c $^ -o $@
+
+$(USER_DIR_S)/mySimpleComputer.o: src/mySimpleComputer.cpp
+	g++ $(FLAGS) -c $^ -o $@
+
+$(USER_DIR_S)/libmySimpleComputer.a: $(USER_DIR_S)/mySimpleComputer.o
+	ar rc $(USER_DIR_S)/libmySimpleComputer.a $(USER_DIR_S)/mySimpleComputer.o
+
+start:
+	./bin/program
+
 clean:
-	rm -f *.o *.a binary
+	rm -rf $(USER_DIR_S)/*.o
+	rm -rf bin/*
 
