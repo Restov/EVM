@@ -1,14 +1,18 @@
 #include "mySimpleComputer.h"
 
+int RAM[100];
+
+int flag;
+
 int sc_memoryInit() {
-    for (int i = 0; i < 100; ++i) {
+    for (int i = 0; i < SIZE; ++i) {
         RAM[i] = 0;
     }
     return 0;
 }
 
 int sc_memorySet(int address, int value) {
-    if (address > SIZE || address < 0) {
+    if (address >= SIZE || address < 0) {
         return 1;
     }
     RAM[address] = value;
@@ -17,7 +21,7 @@ int sc_memorySet(int address, int value) {
 }
 
 int sc_memoryGet(int address, int *value) {
-    if (address > SIZE || address < 0) {
+    if (address >= SIZE || address < 0) {
         return 1;
     }
     *value = RAM[address];

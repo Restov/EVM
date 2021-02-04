@@ -1,6 +1,7 @@
 #ifndef MYSIMPLECOMPUTER
 #define MYSIMPLECOMPUTER
 #define SIZE 100
+#pragma once
 
 
 #define P 0b00000001	// переполнение при выполнение операции
@@ -12,9 +13,9 @@
 #include <iostream>
 #include <cstdio>
 
-int RAM[100];
+extern int RAM[100];
 
-int flag;
+extern int flag;
 
 int sc_memoryInit();
 
