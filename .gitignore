@@ -33,3 +33,5 @@
 main
 binary
 *.txt
+.vscode/
+
