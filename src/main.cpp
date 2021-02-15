@@ -1,8 +1,10 @@
 #include "include/mySimpleComputer.h"
+#include "include/myTerm.h"
 
 using namespace std;
 
-int main() {
+int main()
+{
     sc_memoryInit();
     sc_memorySet(99, 2);
     int value = 0;
@@ -29,5 +31,11 @@ int main() {
     cout << "\nencode = " << value << endl;
     sc_commandDecode(value, command, operand);
     cout << "\ndecode = " << value << endl;
+    mt_gotoXY(100, 20);
+    mt_setbgcolor(BLACK);
+    mt_setfgcolor(RED);
+    int rows = 0, cols = 0;
+    mt_getscreensize(&rows, &cols);
+    //mt_clrscr();
     return 0;
 }
