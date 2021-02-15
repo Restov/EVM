@@ -9,6 +9,21 @@
     cursor_visible=\E[?25h\E[?8c
 */
 
+void escape_commands()
+{
+    std::cout << "\E[H\E[J";
+    std::cout << "\E[05;10H";//address
+    std::cout << "\E[40m\E[31mДаниил";
+    std::cout << "\E[06;8H";//address
+    std::cout << "\E[47m\E[32mИП-912";
+    std::cout << "\E[010;1H";//address
+    std::cout << "\E[00m\n";
+    std::cout << "Clear? Y/N\n";
+    char c;
+    std::cin >> c;
+    if(c == 'Y') std::cout << "\E[H\E[J";
+}
+
 int mt_clrscr(void)
 {
     return printf("\E[H\E[J");
