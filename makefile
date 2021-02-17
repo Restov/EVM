@@ -27,5 +27,5 @@ start:
 
 clean:
 	rm -rf $(USER_DIR_S)/*.o
-	rm -rf bin/*
+	rm -rf bin/program
 
