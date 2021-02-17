@@ -18,8 +18,6 @@ enum colors {
     LIGHT_GRAY  = 7,
 };
 
-void escape_commands();
-
 int mt_clrscr(void);
 
 int mt_gotoXY(int y, int x);
