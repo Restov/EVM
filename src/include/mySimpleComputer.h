@@ -10,8 +10,7 @@
 #define T 0b00001000	// игнорирование тактовых импульсов
 #define E 0b00010000    // указана неверная команда
 
-#include <iostream>
-#include <cstdio>
+#include <stdio.h>
 
 extern int RAM[100];
 
