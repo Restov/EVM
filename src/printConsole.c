@@ -1,5 +1,24 @@
 #include "include/printConsole.h"
 
+static int bcint0 [2] = {1717992960, 8283750};
+// static int bcint1 [2] = {471341056, 3938328};
+// static int bcint2 [2] = {538983424, 3935292};
+// static int bcint3 [2] = {2120252928, 8282238};
+// static int bcint4 [2] = {2120640000, 6316158};
+// static int bcint5 [2] = {2114092544, 8273984};
+// static int bcint6 [2] = {33701376, 4071998};
+// static int bcint7 [2] = {811630080, 396312};
+// static int bcint8 [2] = {2120646144, 8283750};
+// static int bcint9 [2] = {2087074816, 3956832};
+// static int bcintA [2] = {2118269952, 4342338};
+// static int bcintB [2] = {1044528640, 4080194};
+// static int bcintC [2] = {37895168, 3949058};
+// static int bcintD [2] = {1111637504, 4080194};
+// static int bcintE [2] = {2114092544, 8258050};
+// static int bcintF [2] = {33717760, 131646};
+static int bcintp [2] = {2115508224, 1579134};
+// static int bcintm [2] = {2113929216, 126};
+
 int printMemory()
 {
     bc_box(1, 1, BOX_ROW_MEMORY, BOX_COLUMN_MEMORY);
@@ -54,6 +73,30 @@ int printFlags()
     return 0;
 }
 
+int printAccumulator()
+{
+	bc_box(1, BOX_COLUMN_MEMORY + 1, MINI_BOX_ROW, MINI_BOX_COLUMN);
+	mt_gotoXY(1, 67);
+	printf(" accumulator ");
+	return 0;
+}
+
+int printInstructionCounter()
+{
+	bc_box(4, BOX_COLUMN_MEMORY + 1, MINI_BOX_ROW, MINI_BOX_COLUMN);
+	mt_gotoXY(4, 63);
+	printf(" instructionCounter ");
+	return 0;
+}
+
+int printOperation()
+{
+	bc_box(7, BOX_COLUMN_MEMORY + 1, MINI_BOX_ROW, MINI_BOX_COLUMN);
+	mt_gotoXY(7, 68);
+	printf(" Operation ");
+	return 0;
+}
+
 int printKeys()
 {
 	int column = 37;
@@ -79,4 +122,25 @@ int printKeys()
 	mt_gotoXY(21, 48);
 	printf("q   - exit\n\n");
 	return 0;
+}
+
+int printBigChars(){
+    bc_printbigchar(bcintp, 13, 1, BLACK, RED);
+    for (int i = 0, k = 9; i < 4; i++, k+=8)
+    {
+        bc_printbigchar(bcint0, 13, k, BLACK, RED);
+    }
+    return 0;
+}
+
+int printAll()
+{
+    printMemory();
+    printInstructionCounter();
+    printOperation();
+    printAccumulator();
+    printFlags();
+    printBigChars();
+    printKeys();
+    return 0;
 }

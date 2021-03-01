@@ -10,6 +10,7 @@
 #include "myTerm.h"
 #include "myBigChars.h"
 
+
 #define BOX_ROW_MEMORY 12
 #define BOX_COLUMN_MEMORY 61
 
@@ -18,7 +19,11 @@
 
 int printMemory();
 int printFlags();
+int printAccumulator();
+int printInstructionCounter();
+int printOperation();
 int printKeys();
-
+int printBigChars();
+int printAll();
 
 #endif

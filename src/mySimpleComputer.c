@@ -109,11 +109,6 @@ int sc_commandEncode(int command, int operand, int *value)
     }
 
     *value = (command << 7) | operand;
-    // std::cout << "\ncommand + operand= ";
-    // for (int i = 13; i >= 0; --i)
-    // {
-    //     std::cout << ((*value >> i) & 1) << " ";
-    // }
     return 0;
 }
 
@@ -132,14 +127,5 @@ int sc_commandDecode(int value, int *command, int *operand)
     }
     *command = value >> 7;
     *operand = value & 0x7F;
-    // std::cout << "\ncommand + operand= ";
-    // for (int i = 6; i >= 0; --i)
-    // {
-    //     std::cout << ((*command >> i) & 1) << " ";
-    // }
-    // for (int i = 6; i >= 0; --i)
-    // {
-    //     std::cout << ((*operand >> i) & 1) << " ";
-    // }
     return 0;
 }

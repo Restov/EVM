@@ -9,9 +9,6 @@ int main()
     sc_memorySet(101, 2);
     sc_regSet(P, 1);
     mt_clrscr();
-    printMemory();
-    printFlags();
-    printKeys();
-    //mt_clrscr();
+    printAll();
     return 0;
 }
