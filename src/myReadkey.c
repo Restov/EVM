@@ -65,3 +65,17 @@ int rk_readkey(enum keys *key)
     }
     return 0;
 }
+
+int rk_mytermsave(void){
+    FILE *f = fopen("attributes", "wb");
+	fwrite(&atr,sizeof(atr),1,f);
+	fclose(f);
+	return 0;
+}
+int rk_mytermrestore(void){
+    FILE *f;
+    if ((f=fopen("attributes","rb"))==NULL)
+		return -1;
+    fread(&atr,sizeof(atr),1,f);
+    return 0;
+}

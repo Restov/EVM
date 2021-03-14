@@ -21,7 +21,7 @@ enum keys{
     key_q,
 	key_other,
 };
-
+struct termios atr;
 int rk_readkey(enum keys*);
 int rk_mytermsave(void);
 int rk_mytermrestore(void);
