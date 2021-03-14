@@ -2,6 +2,7 @@
 #include "include/myTerm.h"
 #include "include/myBigChars.h"
 #include "include/printConsole.h"
+#include "include/myReadkey.h"
 
 int main()
 {
@@ -10,5 +11,11 @@ int main()
     sc_regSet(P, 1);
     mt_clrscr();
     printAll();
+    enum keys key;
+    rk_readkey(&key);
+    if(key == key_right){
+        mt_setbgcolor(PURPLE);
+
+    }   
     return 0;
 }
