@@ -6,7 +6,7 @@ int rk_readkey(enum keys *key)
 
     
     char buff[8] = {0};
-    read(1,buff,15);
+    read(STDIN_FILENO, buff, 8);
     if (strcmp(buff, "\E[A") == 0)
     {
         *key = key_up;

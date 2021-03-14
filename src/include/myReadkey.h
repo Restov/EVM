@@ -1,6 +1,11 @@
 #ifndef MYREADKEY
 #define MYREADKEY
 
+#include <termios.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+
 enum keys{
 	key_up = 10,
 	key_down,
