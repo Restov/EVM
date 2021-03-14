@@ -68,6 +68,8 @@ int rk_readkey(enum keys *key)
 
 int rk_mytermsave(void){
     FILE *f = fopen("attributes", "wb");
+    if (tcgetattr(STDIN_FILENO, &atr)!=0)
+		return -1;
 	fwrite(&atr,sizeof(atr),1,f);
 	fclose(f);
 	return 0;
@@ -76,6 +78,12 @@ int rk_mytermrestore(void){
     FILE *f;
     if ((f=fopen("attributes","rb"))==NULL)
 		return -1;
-    fread(&atr,sizeof(atr),1,f);
+    if(fread(&atr,sizeof(atr),1,f) == -1){
+        if (tcsetattr(STDIN_FILENO,TCSAFLUSH,&atr)!=0)
+			return -1;
+    }
+    else{
+        return -1;
+    }
     return 0;
 }
