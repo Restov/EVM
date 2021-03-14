@@ -4,57 +4,58 @@
 int rk_readkey(enum keys *key)
 {
 
-    char buf[8] = {0};
-    read(STDIN_FILENO, buf);
-    if (strcmp(buf, "\E[A") == 0)
+    
+    char buff[8] = {0};
+    read(1,buff,15);
+    if (strcmp(buff, "\E[A") == 0)
     {
         *key = key_up;
     }
-    else if (strcmp(buf, "\E[B") == 0)
+    else if (strcmp(buff, "\E[B") == 0)
     {
         *key = key_down;
     }
-    else if (strcmp(buf, "\E[C") == 0)
+    else if (strcmp(buff, "\E[C") == 0)
     {
         *key = key_right;
     }
-    else if (strcmp(buf, "\E[D") == 0)
+    else if (strcmp(buff, "\E[D") == 0)
     {
         *key = key_left;
     }
-    else if (strcmp(buf, "\E[[E") == 0)
+    else if (strcmp(buff, "\E[[E") == 0)
     {
         *key = key_f5;
     }
-    else if (strcmp(buf, "\E[17~") == 0)
+    else if (strcmp(buff, "\E[17~") == 0)
     {
         *key = key_f6;
     }
-    else if (buf[0] == 'l')
+    else if (buff[0] == 'l')
     {
         *key = key_l;
     }
-    else if (buf[0] == 's')
+    else if (buff[0] == 's')
     {
         *key = key_s;
     }
-    else if (buf[0] == 'r')
+    else if (buff[0] == 'r')
     {
         *key = key_r;
     }
-    else if (buf[0] == 't')
+    else if (buff[0] == 't')
     {
         *key = key_t;
     }
-    else if (buf[0] == 'i')
+    else if (buff[0] == 'i')
     {
         *key = key_i;
     }
-    else if (buf[0] >= '0' && buf[0] <= '9')
+    else if (buff[0] >= '0' && buff[0] <= '9')
     {
-        *key = buf[0] - 48;
+        *key = buff[0] - 48;
     }
-    else if (buf[0] == 'q')
+    else if (buff[0] == 'q')
     {
         *key = key_q;
     }
@@ -62,4 +63,5 @@ int rk_readkey(enum keys *key)
     {
         *key = key_other;
     }
+    return 0;
 }
