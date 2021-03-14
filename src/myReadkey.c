@@ -2,7 +2,7 @@
 
 int rk_readkey(enum keys *key)
 {
-    rk_mytermregime(0, 0, 1, 1, 0);
+    rk_mytermregime(1, 0, 1, 1, 1);
     char buff[8] = {0};
     read(STDIN_FILENO, buff, 8);
     if (strcmp(buff, "\E[A") == 0)
@@ -67,53 +67,43 @@ int rk_readkey(enum keys *key)
 
 int rk_mytermsave(void)
 {
-    FILE *f = fopen("attributes", "wb");
     if (tcgetattr(STDIN_FILENO, &atr) != 0)
-        return -1;
-    fwrite(&atr, sizeof(atr), 1, f);
-    fclose(f);
+        return -1;   
     return 0;
 }
 int rk_mytermrestore(void)
 {
-    FILE *f;
-    if ((f = fopen("attributes", "rb")) == NULL)
-        return -1;
-    if (fread(&atr, sizeof(atr), 1, f) == -1)
-    {
-        if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &atr) != 0)
+    if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &atr) != 0)
             return -1;
-    }
-    else
-    {
-        return -1;
-    }
     return 0;
 }
 
 int rk_mytermregime(int regime, int vtime, int vmin, int echo, int sigint)
 {
     struct termios newatr;
+
     rk_mytermsave();
-    if (regime == 1)
+    newatr = atr;
+    if (regime == 0)
     {
         newatr.c_lflag |= ICANON;
     }
-    else if (regime == 0)
+    else if (regime == 1)
     {
-        if (echo == 1)
+        newatr.c_lflag &= (~ICANON);
+        if (echo == 0)
         {
             newatr.c_lflag |= ECHO;
         }
-        else if (echo == 0)
+        else if (echo == 1)
         {
             newatr.c_lflag &= (~ECHO);
         }
-        if (sigint == 1)
+        if (sigint == 0)
         {
             newatr.c_lflag |= ISIG;
         }
-        else if (sigint == 0)
+        else if (sigint == 1)
         {
             newatr.c_lflag &= (~ISIG);
         }
