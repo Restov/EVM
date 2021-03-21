@@ -27,6 +27,7 @@ int resetBG();
 int resetTerm();
 int printInstructionCounterValue();
 int run();
+int printCaseBig();
 int printFlags();
 int printAccumulator();
 void keyUp();

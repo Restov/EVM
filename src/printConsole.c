@@ -17,7 +17,7 @@ static int bcintD[2] = {1111637504, 4080194};
 static int bcintE[2] = {2114092544, 8258050};
 static int bcintF[2] = {33717760, 131646};
 static int bcintp[2] = {2115508224, 1579134};
-//static int bcintm[2] = {2113929216, 126};
+static int bcintm[2] = {2113929216, 126};
 int time = 0;
 void getXY(int *x, int *y)
 {
@@ -105,7 +105,7 @@ int resetTerm()
     //printf("\E[00m\n");
     resetBG();
     printFlags();
-    printBigChars();
+    printCaseBig();
     mt_gotoXY(25, 1);
     for (int i = 0; i < 8; i++)
     {
@@ -124,7 +124,6 @@ int run()
 {
     enum keys key;
     resetTerm();
-
     sc_memoryInit();
     sc_regInit();
     accumulator = 0;
@@ -132,7 +131,7 @@ int run()
     printAll();
     printAccumulatorValue();
     printInstructionCounterValue();
-
+    resetTerm();
     while (key != key_q)
     {
         rk_readkey(&key);
@@ -379,13 +378,37 @@ int printKeys()
     return 0;
 }
 
+int printCaseBig(){
+    int value;
+	int rank[4];
+	int x, y;
+	int column = 46;
+	int row = 10;
+	bc_box(BOX_ROW_MEMORY + 1, 1, row, column);
+	getXY(&x, &y);
+	
+	sc_memoryGet(y * 10 + x, &value);
+
+	if (value < 0) {
+		bc_printbigchar(bcintm, 13, 2, BLACK, RED);
+		value *= -1;
+	} else {
+		bc_printbigchar(bcintp, 13, 2, BLACK, RED);
+	}
+
+	for (int i = 0; i < 4; ++i) {
+		rank[i] = value % 16;
+		value /= 16;
+	}
+
+	for (int i = 38, j = 0; i >= 11; i -= 9, j++)
+		printBigChars(rank[j], i);
+
+	return 0;
+}
+
 int printBigChars(int val, int k)
 {
-    bc_printbigchar(bcintp, 13, 1, BLACK, RED);
-    /*for (int i = 0, k = 9; i < 4; i++, k += 8)
-    {
-        bc_printbigchar(bcint0, 13, k, BLACK, RED);
-    }*/
     switch (val) {
 		case 0:
 			bc_printbigchar(bcint0,  13, k, BLACK, RED);
