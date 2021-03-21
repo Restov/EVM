@@ -1,23 +1,23 @@
 #include "include/printConsole.h"
 
 static int bcint0[2] = {1717992960, 8283750};
-//static int bcint1[2] = {471341056, 3938328};
-// static int bcint2[2] = {538983424, 3935292};
-// static int bcint3[2] = {2120252928, 8282238};
-// static int bcint4[2] = {2120640000, 6316158};
-// static int bcint5[2] = {2114092544, 8273984};
-// static int bcint6[2] = {33701376, 4071998};
-// static int bcint7[2] = {811630080, 396312};
-// static int bcint8[2] = {2120646144, 8283750};
-// static int bcint9[2] = {2087074816, 3956832};
-// static int bcintA[2] = {2118269952, 4342338};
-// static int bcintB[2] = {1044528640, 4080194};
-// static int bcintC[2] = {37895168, 3949058};
-// static int bcintD[2] = {1111637504, 4080194};
-// static int bcintE[2] = {2114092544, 8258050};
-// static int bcintF[2] = {33717760, 131646};
+static int bcint1[2] = {471341056, 3938328};
+static int bcint2[2] = {538983424, 3935292};
+static int bcint3[2] = {2120252928, 8282238};
+static int bcint4[2] = {2120640000, 6316158};
+static int bcint5[2] = {2114092544, 8273984};
+static int bcint6[2] = {33701376, 4071998};
+static int bcint7[2] = {811630080, 396312};
+static int bcint8[2] = {2120646144, 8283750};
+static int bcint9[2] = {2087074816, 3956832};
+static int bcintA[2] = {2118269952, 4342338};
+static int bcintB[2] = {1044528640, 4080194};
+static int bcintC[2] = {37895168, 3949058};
+static int bcintD[2] = {1111637504, 4080194};
+static int bcintE[2] = {2114092544, 8258050};
+static int bcintF[2] = {33717760, 131646};
 static int bcintp[2] = {2115508224, 1579134};
-// static int bcintm[2] = {2113929216, 126};
+//static int bcintm[2] = {2113929216, 126};
 int time = 0;
 void getXY(int *x, int *y)
 {
@@ -379,13 +379,63 @@ int printKeys()
     return 0;
 }
 
-int printBigChars()
+int printBigChars(int val, int k)
 {
     bc_printbigchar(bcintp, 13, 1, BLACK, RED);
-    for (int i = 0, k = 9; i < 4; i++, k += 8)
+    /*for (int i = 0, k = 9; i < 4; i++, k += 8)
     {
         bc_printbigchar(bcint0, 13, k, BLACK, RED);
-    }
+    }*/
+    switch (val) {
+		case 0:
+			bc_printbigchar(bcint0,  13, k, BLACK, RED);
+			break;
+		case 1:
+			bc_printbigchar(bcint1,  13, k, BLACK, RED);
+			break;		
+		case 2:
+			bc_printbigchar(bcint2,  13, k, BLACK, RED);
+			break;
+		case 3:
+			bc_printbigchar(bcint3,  13, k, BLACK, RED);
+			break;
+		case 4:
+			bc_printbigchar(bcint4,  13, k, BLACK, RED);
+			break;
+		case 5:
+			bc_printbigchar(bcint5,  13, k, BLACK, RED);
+			break;
+		case 6:
+			bc_printbigchar(bcint6,  13, k, BLACK, RED);
+			break;
+		case 7:
+			bc_printbigchar(bcint7,  13, k, BLACK, RED);
+			break;
+		case 8:
+			bc_printbigchar(bcint8,  13, k, BLACK, RED);
+			break;
+		case 9:
+			bc_printbigchar(bcint9,  13, k, BLACK, RED);
+			break;
+		case 10:
+			bc_printbigchar(bcintA,  13, k, BLACK, RED);
+			break;
+		case 11:
+			bc_printbigchar(bcintB,  13, k, BLACK, RED);
+			break;
+		case 12:
+			bc_printbigchar(bcintC,  13, k, BLACK, RED);
+			break;
+		case 13:
+			bc_printbigchar(bcintD,  13, k, BLACK, RED);
+			break;
+		case 14:
+			bc_printbigchar(bcintE,  13, k, BLACK, RED);
+			break;
+		case 15:
+			bc_printbigchar(bcintF,  13, k, BLACK, RED);
+			break;
+	}
     return 0;
 }
 
@@ -396,7 +446,7 @@ int printAll()
     printOperation();
     printAccumulator();
     printFlags();
-    printBigChars();
+    //printBigChars();
     printKeys();
     return 0;
 }
