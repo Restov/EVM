@@ -19,6 +19,7 @@ static int bcintF[2] = {33717760, 131646};
 static int bcintp[2] = {2115508224, 1579134};
 static int bcintm[2] = {2113929216, 126};
 int time = 0;
+int instructionCounter = 0;
 void getXY(int *x, int *y)
 {
     *x = coord % 10;
@@ -28,7 +29,7 @@ void getXY(int *x, int *y)
 int printInstructionCounterValue()
 {
     mt_gotoXY(5, 70);
-    printf("+%.4X", time);
+    printf("+%.4X", instructionCounter);
     return 0;
 }
 
@@ -97,7 +98,6 @@ int resetBG()
 int resetTerm()
 {
     mt_clrscr();
-    time++;
     printAll();
     printAccumulatorValue();
     printInstructionCounterValue();
@@ -131,6 +131,8 @@ int run()
     printAll();
     printAccumulatorValue();
     printInstructionCounterValue();
+    signal (SIGUSR1, signalhangle);
+    create_timer(1);
     resetTerm();
     while (key != key_q)
     {
@@ -153,10 +155,12 @@ int run()
             //keyStep();
             break;
         case key_i:
-            accumulator = 0;
-            time = -1;
-            sc_memoryInit();
-            resetTerm();
+            // accumulator = 0;
+            // instructionCounter = 0;
+            // sc_regInit();
+            // sc_memoryInit();
+            // resetTerm();
+            raise(SIGUSR1);
             break;
         case key_f5:
             keyF5();

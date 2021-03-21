@@ -10,6 +10,7 @@
 #include "myTerm.h"
 #include "myBigChars.h"
 #include "myReadkey.h"
+#include "mySignal.h"
 
 #define BOX_ROW_MEMORY 12
 #define BOX_COLUMN_MEMORY 61
@@ -18,6 +19,7 @@
 #define MINI_BOX_COLUMN 22
 int coord;
 int accumulator;
+extern int instructionCounter;
 int printMemory();
 void getXY(int *x, int *y);
 int printInstructionCounter();
