@@ -21,7 +21,7 @@ int rk_readkey(enum keys *key)
     {
         *key = key_left;
     }
-    else if (strcmp(buff, "\E[[E") == 0)
+    else if (strcmp(buff, "\E[15~") == 0)
     {
         *key = key_f5;
     }
