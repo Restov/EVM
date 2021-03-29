@@ -131,7 +131,7 @@ int run()
     printAll();
     printAccumulatorValue();
     printInstructionCounterValue();
-    signal (SIGUSR1, signalhangle);
+    signal (SIGUSR1, reset_signalhagle);
     create_timer(1);
     resetTerm();
     while (key != key_q)
