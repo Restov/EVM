@@ -38,6 +38,8 @@ void keyRight();
 void keyLeft();
 void keyF5();
 void keyF6();
+void keyStep();
+void keyRun();
 int printOperation();
 int printKeys();
 int printBigChars();

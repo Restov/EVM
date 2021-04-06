@@ -12,6 +12,9 @@ void signalhangle(int signal) {
 void reset_signalhagle(int signal){
     accumulator = 0;
     instructionCounter = 0;
+    setBGColor(0);
+    coord = 0;
+    setBGColor(1);
     sc_regInit();
     sc_memoryInit();
     resetTerm();

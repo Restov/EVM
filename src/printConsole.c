@@ -149,10 +149,10 @@ int run()
             sc_memorySave("file.txt");
             break;
         case key_r:
-            //keyRun();
+            keyRun();
             break;
         case key_t:
-            //keyStep();
+            keyStep();
             break;
         case key_i:
             // accumulator = 0;
@@ -187,6 +187,34 @@ int run()
     }
 
     return 0;
+}
+void keyRun(){
+    sc_regSet(T,0);
+    int x,y;
+    getXY(&x,&y);
+    setBGColor(0);
+    x = 0;
+    y = 0;
+    coord = 0;
+    setBGColor(1);
+    sleep(1);
+    for(x = 0; x < 10; x++){
+        for(y = 0; y < 10;y++){
+            keyStep();
+            sleep(1);
+            }
+    }
+    sc_regSet(T,1);
+    instructionCounter = 0;
+    x = 0; y = 0;
+    coord = 0;
+    setBGColor(1);
+    resetTerm();
+}   
+void keyStep(){
+    // CU();
+    keyRight(); 
+    resetTerm();
 }
 void keyF5()
 {

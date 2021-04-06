@@ -58,6 +58,7 @@ int sc_memoryLoad(const char *filename)
 int sc_regInit()
 {
     flag = 0;
+    sc_regSet(T,1);
     return 0;
 }
 
