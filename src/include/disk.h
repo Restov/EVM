@@ -2,6 +2,8 @@
 #define DISK_H
 
 #include <inttypes.h>
+#include <stdio.h>
+
 
 typedef struct {
     uint16_t sector : 6;
