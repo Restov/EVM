@@ -74,14 +74,16 @@ int Cu()
             return 1;
             break;
         case JNP:
-				if ((accumulator % 2) != 0) {
-					if (operand >= SIZE || operand < 0) {
-						sc_regSet(M, 1);
-						break;
-					}
-					instructionCounter = operand;
-				}
-				break;
+            if ((accumulator % 2) != 0)
+            {
+                if (operand >= SIZE || operand < 0)
+                {
+                    sc_regSet(M, 1);
+                    break;
+                }
+                instructionCounter = operand;
+            }
+            break;
         }
     }
     return 0;
