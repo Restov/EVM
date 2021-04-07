@@ -101,8 +101,6 @@ int resetTerm()
     printAll();
     printAccumulatorValue();
     printInstructionCounterValue();
-
-    //printf("\E[00m\n");
     resetBG();
     printFlags();
     printCaseBig();
@@ -155,11 +153,6 @@ int run()
             keyStep();
             break;
         case key_i:
-            // accumulator = 0;
-            // instructionCounter = 0;
-            // sc_regInit();
-            // sc_memoryInit();
-            // resetTerm();
             raise(SIGUSR1);
             break;
         case key_f5:
@@ -213,6 +206,11 @@ void keyRun(){
 }   
 void keyStep(){
     // CU();
+    int x, y;
+    getXY(&x, &y);
+    coord = instructionCounter;
+    printAccumulatorValue();
+    printInstructionCounterValue();
     keyRight(); 
     resetTerm();
 }
