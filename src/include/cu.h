@@ -13,6 +13,7 @@
 #define JNEG 0X41
 #define JZ 0x42
 #define HALT 0x43
+#define JNP 0x59
 int Cu();
 int Alu(int command, int operand);
 
