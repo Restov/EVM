@@ -208,7 +208,7 @@ void keyStep(){
     // CU();
     int x, y;
     getXY(&x, &y);
-    coord = instructionCounter;
+    instructionCounter = coord;
     printAccumulatorValue();
     printInstructionCounterValue();
     keyRight(); 
