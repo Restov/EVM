@@ -34,6 +34,9 @@ $(USER_DIR_S)/myReadkey.o: src/myReadkey.c
 $(USER_DIR_S)/mySignal.o: src/mySignal.c
 	gcc $(FLAGS) -c $^ -o $@
 
+$(USER_DIR_S)/libmyTerm.a: $(USER_DIR_S)/myTerm.o
+	ar rc $(USER_DIR_S)/libmyTerm.a $(USER_DIR_S)/myTerm.o
+
 $(USER_DIR_S)/cu.o: src/cu.c
 	gcc $(FLAGS) -c $^ -o $@
 
