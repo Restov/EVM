@@ -103,6 +103,7 @@ int resetTerm()
     printInstructionCounterValue();
     resetBG();
     printFlags();
+    printOperation();
     printCaseBig();
     mt_gotoXY(25, 1);
     for (int i = 0; i < 8; i++)
@@ -181,6 +182,16 @@ int run()
 
     return 0;
 }
+void printOperation(){
+    int x,y;
+    getXY(&x,&y);
+    int value;
+    sc_memoryGet(instructionCounter,&value);
+    mt_gotoXY(8,69);
+    int command, operand;
+    sc_commandDecode(value,&command, &operand);
+    printf("+%.2X : %.2X", command,operand);
+}
 void keyRun(){
     sc_regSet(T,0);
     int x,y;
@@ -189,6 +200,7 @@ void keyRun(){
     x = 0;
     y = 0;
     coord = 0;
+    instructionCounter = 0;
     setBGColor(1);
     sleep(1);
     for(x = 0; x < 10; x++){
@@ -205,10 +217,10 @@ void keyRun(){
     resetTerm();
 }   
 void keyStep(){
-    // CU();
+    Cu();
     int x, y;
     getXY(&x, &y);
-    instructionCounter = coord;
+    //instructionCounter = coord;
     printAccumulatorValue();
     printInstructionCounterValue();
     keyRight(); 
@@ -373,7 +385,7 @@ int printInstructionCounter()
     return 0;
 }
 
-int printOperation()
+int printOperationbox()
 {
     bc_box(7, BOX_COLUMN_MEMORY + 1, MINI_BOX_ROW, MINI_BOX_COLUMN);
     mt_gotoXY(7, 68);
@@ -496,7 +508,7 @@ int printAll()
 {
     printMemory();
     printInstructionCounter();
-    printOperation();
+    printOperationbox();
     printAccumulator();
     printFlags();
     //printBigChars();

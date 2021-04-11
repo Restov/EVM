@@ -1,4 +1,4 @@
-#include "cu.h"
+#include "include/cu.h"
 
 int Cu()
 {
@@ -29,15 +29,15 @@ int Cu()
             break;
         case WRITE:
             mt_gotoXY(24, 15);
-            sc_memoryGet(operand, value);
-            printf("%d\n", &value);
+            sc_memoryGet(operand, &value);
+            printf("%ls\n", &value);
             mt_gotoXY(24, 15);
             break;
         case LOAD:
-            sc_memoryGet(operand, &accumulator); // узнать тут инкаунтер или опперанд
+            sc_memoryGet(operand, &accumulator); 
             break;
         case STORE:
-            sc_memorySet(operand, &accumulator); // и тут тоже
+            sc_memorySet(operand, accumulator); 
             break;
         case JUMP:
             if (operand >= SIZE || operand < 0)
@@ -86,6 +86,13 @@ int Cu()
             break;
         }
     }
+    if(instructionCounter + 1 < SIZE){
+        instructionCounter++;
+    }
+    else{
+        sc_regSet(M,1);
+    }
+
     return 0;
 }
 
@@ -131,4 +138,5 @@ int Alu(int command, int operand)
         sc_regSet(E, 1);
         break;
     }
+    return 0;
 }

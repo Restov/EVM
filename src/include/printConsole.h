@@ -11,7 +11,7 @@
 #include "myBigChars.h"
 #include "myReadkey.h"
 #include "mySignal.h"
-
+#include "cu.h"
 #define BOX_ROW_MEMORY 12
 #define BOX_COLUMN_MEMORY 61
 
@@ -40,7 +40,8 @@ void keyF5();
 void keyF6();
 void keyStep();
 void keyRun();
-int printOperation();
+void printOperation();
+int printOperationbox();
 int printKeys();
 int printBigChars();
 int printAll();
