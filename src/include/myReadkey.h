@@ -16,7 +16,7 @@ enum keys{
 	key_l,
 	key_s,
 	key_r,
-	key_t,
+	key_tt,
 	key_i,
     key_q,
 	key_other,

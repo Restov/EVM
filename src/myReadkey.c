@@ -43,7 +43,7 @@ int rk_readkey(enum keys *key)
     }
     else if (buff[0] == 't')
     {
-        *key = key_t;
+        *key = key_tt;
     }
     else if (buff[0] == 'i')
     {

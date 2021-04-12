@@ -6,12 +6,14 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdlib.h>
 #include "mySimpleComputer.h"
 #include "myTerm.h"
 #include "myBigChars.h"
 #include "myReadkey.h"
 #include "mySignal.h"
 #include "cu.h"
+#include "asm.h"
 #define BOX_ROW_MEMORY 12
 #define BOX_COLUMN_MEMORY 61
 
@@ -42,6 +44,7 @@ void keyStep();
 void keyRun();
 void printOperation();
 int printOperationbox();
+void keyLoad();
 int printKeys();
 int printBigChars();
 int printAll();

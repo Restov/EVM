@@ -130,9 +130,10 @@ int run()
     printAll();
     printAccumulatorValue();
     printInstructionCounterValue();
-    signal (SIGUSR1, reset_signalhagle);
+    signal(SIGUSR1, reset_signalhagle);
     create_timer(1);
     resetTerm();
+    char filename[64];
     while (key != key_q)
     {
         rk_readkey(&key);
@@ -140,9 +141,50 @@ int run()
         switch (key)
         {
         case key_l:
+            
+            printf("Enter filename: ");
+            fgets(filename, 63, stdin);
+            filename[strlen(filename) - 1] = 0;
+            char *ptr1 = strrchr(filename, '.');
+            if (ptr1 != NULL)
+            {
+                if (strcmp(ptr1, ".sa") == 0)
+                {
+                    char *ptr = NULL;
+                    int size = strlen(filename);
+                    ptr = malloc(sizeof(char) * size);
+                    for (int i = 0; i < size; i++)
+                        ptr[i] = filename[i];
+                    ptr[size - 1] = 'o';
+                    ptr[size] = '\0';
+                    asm_to_object(filename, ptr);
+                    //sc_memoryLoad(ptr);
+                    resetTerm();
+                    printf("\nFile loaded");
+                }
+                /*else if (strcmp(ptr1, ".sb") == 0)
+        {
+
+            char *ptr = NULL;
+            int size = strlen(filename);
+            ptr = malloc(sizeof(char) * size);
+            for (int i = 0; i < size; i++)
+                ptr[i] = filename[i];
+            ptr[size - 1] = 'a';
+            ptr[size] = '\0';
+            basic_to_asm(filename, ptr);
+            filename[size - 1] = 'o';
+            filename[size] = '\0';
+            asm_to_object(ptr, filename);
+            sc_memoryLoad(filename);
             resetTerm();
-            sc_memoryLoad("file.txt");
-            printAll();
+        }*/
+                else if (strcmp(ptr1, ".so") == 0)
+                {
+                    sc_memoryLoad(filename);
+                    resetTerm();
+                }
+            }
             break;
         case key_s:
             sc_memorySave("file.txt");
@@ -150,7 +192,7 @@ int run()
         case key_r:
             keyRun();
             break;
-        case key_t:
+        case key_tt:
             keyStep();
             break;
         case key_i:
@@ -182,20 +224,68 @@ int run()
 
     return 0;
 }
-void printOperation(){
-    int x,y;
-    getXY(&x,&y);
-    int value;
-    sc_memoryGet(instructionCounter,&value);
-    mt_gotoXY(8,69);
-    int command, operand;
-    sc_commandDecode(value,&command, &operand);
-    printf("+%.2X : %.2X", command,operand);
+void keyLoad()
+{
+    char filename[64] = "fact.sa";
+    printf("Enter filename: ");
+    // fgets(filename, 63, stdin);
+    filename[strlen(filename) - 1] = 0;
+    char *ptr1 = strrchr(filename, '.');
+    if (ptr1 != NULL)
+    {
+        if (strcmp(ptr1, ".sa") == 0)
+        {
+            char *ptr = NULL;
+            int size = strlen(filename);
+            ptr = malloc(sizeof(char) * size);
+            for (int i = 0; i < size; i++)
+                ptr[i] = filename[i];
+            ptr[size - 1] = 'o';
+            ptr[size] = '\0';
+            asm_to_object(filename, ptr);
+            // sc_memoryLoad(ptr);
+            resetTerm();
+        }
+        /*else if (strcmp(ptr1, ".sb") == 0)
+        {
+
+            char *ptr = NULL;
+            int size = strlen(filename);
+            ptr = malloc(sizeof(char) * size);
+            for (int i = 0; i < size; i++)
+                ptr[i] = filename[i];
+            ptr[size - 1] = 'a';
+            ptr[size] = '\0';
+            basic_to_asm(filename, ptr);
+            filename[size - 1] = 'o';
+            filename[size] = '\0';
+            asm_to_object(ptr, filename);
+            sc_memoryLoad(filename);
+            resetTerm();
+        }*/
+        else if (strcmp(ptr1, ".so") == 0)
+        {
+            sc_memoryLoad(filename);
+            resetTerm();
+        }
+    }
 }
-void keyRun(){
-    sc_regSet(T,0);
-    int x,y;
-    getXY(&x,&y);
+void printOperation()
+{
+    int x, y;
+    getXY(&x, &y);
+    int value;
+    sc_memoryGet(instructionCounter, &value);
+    mt_gotoXY(8, 69);
+    int command, operand;
+    sc_commandDecode(value, &command, &operand);
+    printf("+%.2X : %.2X", command, operand);
+}
+void keyRun()
+{
+    sc_regSet(T, 0);
+    int x, y;
+    getXY(&x, &y);
     setBGColor(0);
     x = 0;
     y = 0;
@@ -203,27 +293,31 @@ void keyRun(){
     instructionCounter = 0;
     setBGColor(1);
     sleep(1);
-    for(x = 0; x < 10; x++){
-        for(y = 0; y < 10;y++){
+    for (x = 0; x < 10; x++)
+    {
+        for (y = 0; y < 10; y++)
+        {
             keyStep();
             sleep(1);
-            }
+        }
     }
-    sc_regSet(T,1);
+    sc_regSet(T, 1);
     instructionCounter = 0;
-    x = 0; y = 0;
+    x = 0;
+    y = 0;
     coord = 0;
     setBGColor(1);
     resetTerm();
-}   
-void keyStep(){
+}
+void keyStep()
+{
     Cu();
     int x, y;
     getXY(&x, &y);
     //instructionCounter = coord;
     printAccumulatorValue();
     printInstructionCounterValue();
-    keyRight(); 
+    keyRight();
     resetTerm();
 }
 void keyF5()
@@ -420,87 +514,93 @@ int printKeys()
     return 0;
 }
 
-int printCaseBig(){
+int printCaseBig()
+{
     int value;
-	int rank[4];
-	int x, y;
-	int column = 46;
-	int row = 10;
-	bc_box(BOX_ROW_MEMORY + 1, 1, row, column);
-	getXY(&x, &y);
-	
-	sc_memoryGet(y * 10 + x, &value);
+    int rank[4];
+    int x, y;
+    int column = 46;
+    int row = 10;
+    bc_box(BOX_ROW_MEMORY + 1, 1, row, column);
+    getXY(&x, &y);
 
-	if (value < 0) {
-		bc_printbigchar(bcintm, 13, 2, BLACK, RED);
-		value *= -1;
-	} else {
-		bc_printbigchar(bcintp, 13, 2, BLACK, RED);
-	}
+    sc_memoryGet(y * 10 + x, &value);
 
-	for (int i = 0; i < 4; ++i) {
-		rank[i] = value % 16;
-		value /= 16;
-	}
+    if (value < 0)
+    {
+        bc_printbigchar(bcintm, 13, 2, BLACK, RED);
+        value *= -1;
+    }
+    else
+    {
+        bc_printbigchar(bcintp, 13, 2, BLACK, RED);
+    }
 
-	for (int i = 38, j = 0; i >= 11; i -= 9, j++)
-		printBigChars(rank[j], i);
+    for (int i = 0; i < 4; ++i)
+    {
+        rank[i] = value % 16;
+        value /= 16;
+    }
 
-	return 0;
+    for (int i = 38, j = 0; i >= 11; i -= 9, j++)
+        printBigChars(rank[j], i);
+
+    return 0;
 }
 
 int printBigChars(int val, int k)
 {
-    switch (val) {
-		case 0:
-			bc_printbigchar(bcint0,  13, k, BLACK, RED);
-			break;
-		case 1:
-			bc_printbigchar(bcint1,  13, k, BLACK, RED);
-			break;		
-		case 2:
-			bc_printbigchar(bcint2,  13, k, BLACK, RED);
-			break;
-		case 3:
-			bc_printbigchar(bcint3,  13, k, BLACK, RED);
-			break;
-		case 4:
-			bc_printbigchar(bcint4,  13, k, BLACK, RED);
-			break;
-		case 5:
-			bc_printbigchar(bcint5,  13, k, BLACK, RED);
-			break;
-		case 6:
-			bc_printbigchar(bcint6,  13, k, BLACK, RED);
-			break;
-		case 7:
-			bc_printbigchar(bcint7,  13, k, BLACK, RED);
-			break;
-		case 8:
-			bc_printbigchar(bcint8,  13, k, BLACK, RED);
-			break;
-		case 9:
-			bc_printbigchar(bcint9,  13, k, BLACK, RED);
-			break;
-		case 10:
-			bc_printbigchar(bcintA,  13, k, BLACK, RED);
-			break;
-		case 11:
-			bc_printbigchar(bcintB,  13, k, BLACK, RED);
-			break;
-		case 12:
-			bc_printbigchar(bcintC,  13, k, BLACK, RED);
-			break;
-		case 13:
-			bc_printbigchar(bcintD,  13, k, BLACK, RED);
-			break;
-		case 14:
-			bc_printbigchar(bcintE,  13, k, BLACK, RED);
-			break;
-		case 15:
-			bc_printbigchar(bcintF,  13, k, BLACK, RED);
-			break;
-	}
+    switch (val)
+    {
+    case 0:
+        bc_printbigchar(bcint0, 13, k, BLACK, RED);
+        break;
+    case 1:
+        bc_printbigchar(bcint1, 13, k, BLACK, RED);
+        break;
+    case 2:
+        bc_printbigchar(bcint2, 13, k, BLACK, RED);
+        break;
+    case 3:
+        bc_printbigchar(bcint3, 13, k, BLACK, RED);
+        break;
+    case 4:
+        bc_printbigchar(bcint4, 13, k, BLACK, RED);
+        break;
+    case 5:
+        bc_printbigchar(bcint5, 13, k, BLACK, RED);
+        break;
+    case 6:
+        bc_printbigchar(bcint6, 13, k, BLACK, RED);
+        break;
+    case 7:
+        bc_printbigchar(bcint7, 13, k, BLACK, RED);
+        break;
+    case 8:
+        bc_printbigchar(bcint8, 13, k, BLACK, RED);
+        break;
+    case 9:
+        bc_printbigchar(bcint9, 13, k, BLACK, RED);
+        break;
+    case 10:
+        bc_printbigchar(bcintA, 13, k, BLACK, RED);
+        break;
+    case 11:
+        bc_printbigchar(bcintB, 13, k, BLACK, RED);
+        break;
+    case 12:
+        bc_printbigchar(bcintC, 13, k, BLACK, RED);
+        break;
+    case 13:
+        bc_printbigchar(bcintD, 13, k, BLACK, RED);
+        break;
+    case 14:
+        bc_printbigchar(bcintE, 13, k, BLACK, RED);
+        break;
+    case 15:
+        bc_printbigchar(bcintF, 13, k, BLACK, RED);
+        break;
+    }
     return 0;
 }
 
