@@ -141,28 +141,29 @@ int run()
         switch (key)
         {
         case key_l:
-            
+
             printf("Enter filename: ");
+            rk_mytermregime(0, 0, 1, 1, 1);
             fgets(filename, 63, stdin);
             filename[strlen(filename) - 1] = 0;
             char *ptr1 = strrchr(filename, '.');
-            if (ptr1 != NULL)
+ if (ptr1 != NULL)
+           {
+             if (strcmp(ptr1, ".sa") == 0)
             {
-                if (strcmp(ptr1, ".sa") == 0)
-                {
-                    char *ptr = NULL;
-                    int size = strlen(filename);
-                    ptr = malloc(sizeof(char) * size);
-                    for (int i = 0; i < size; i++)
-                        ptr[i] = filename[i];
-                    ptr[size - 1] = 'o';
-                    ptr[size] = '\0';
-                    asm_to_object(filename, ptr);
-                    //sc_memoryLoad(ptr);
-                    resetTerm();
-                    printf("\nFile loaded");
-                }
-                /*else if (strcmp(ptr1, ".sb") == 0)
+            char *ptr = NULL;
+            int size = strlen(filename);
+            ptr = malloc(sizeof(char) * size);
+            for (int i = 0; i < size; i++)
+                ptr[i] = filename[i];
+            ptr[size - 1] = 'o';
+            ptr[size] = '\0';
+            asm_to_object(filename, ptr);
+            printf("Asm_to_obj");
+            sc_memoryLoad(ptr);
+            resetTerm();
+             }
+            /*else if (strcmp(ptr1, ".sb") == 0)
         {
 
             char *ptr = NULL;
@@ -179,12 +180,12 @@ int run()
             sc_memoryLoad(filename);
             resetTerm();
         }*/
-                else if (strcmp(ptr1, ".so") == 0)
+            else if (strcmp(ptr1, ".so") == 0)
                 {
                     sc_memoryLoad(filename);
                     resetTerm();
                 }
-            }
+             }
             break;
         case key_s:
             sc_memorySave("file.txt");
@@ -223,52 +224,6 @@ int run()
     }
 
     return 0;
-}
-void keyLoad()
-{
-    char filename[64] = "fact.sa";
-    printf("Enter filename: ");
-    // fgets(filename, 63, stdin);
-    filename[strlen(filename) - 1] = 0;
-    char *ptr1 = strrchr(filename, '.');
-    if (ptr1 != NULL)
-    {
-        if (strcmp(ptr1, ".sa") == 0)
-        {
-            char *ptr = NULL;
-            int size = strlen(filename);
-            ptr = malloc(sizeof(char) * size);
-            for (int i = 0; i < size; i++)
-                ptr[i] = filename[i];
-            ptr[size - 1] = 'o';
-            ptr[size] = '\0';
-            asm_to_object(filename, ptr);
-            // sc_memoryLoad(ptr);
-            resetTerm();
-        }
-        /*else if (strcmp(ptr1, ".sb") == 0)
-        {
-
-            char *ptr = NULL;
-            int size = strlen(filename);
-            ptr = malloc(sizeof(char) * size);
-            for (int i = 0; i < size; i++)
-                ptr[i] = filename[i];
-            ptr[size - 1] = 'a';
-            ptr[size] = '\0';
-            basic_to_asm(filename, ptr);
-            filename[size - 1] = 'o';
-            filename[size] = '\0';
-            asm_to_object(ptr, filename);
-            sc_memoryLoad(filename);
-            resetTerm();
-        }*/
-        else if (strcmp(ptr1, ".so") == 0)
-        {
-            sc_memoryLoad(filename);
-            resetTerm();
-        }
-    }
 }
 void printOperation()
 {
