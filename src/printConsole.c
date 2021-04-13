@@ -147,45 +147,28 @@ int run()
             fgets(filename, 63, stdin);
             filename[strlen(filename) - 1] = 0;
             char *ptr1 = strrchr(filename, '.');
- if (ptr1 != NULL)
-           {
-             if (strcmp(ptr1, ".sa") == 0)
+            if (ptr1 != NULL)
             {
-            char *ptr = NULL;
-            int size = strlen(filename);
-            ptr = malloc(sizeof(char) * size);
-            for (int i = 0; i < size; i++)
-                ptr[i] = filename[i];
-            ptr[size - 1] = 'o';
-            ptr[size] = '\0';
-            asm_to_object(filename, ptr);
-            printf("Asm_to_obj");
-            sc_memoryLoad(ptr);
-            resetTerm();
-             }
-            /*else if (strcmp(ptr1, ".sb") == 0)
-        {
-
-            char *ptr = NULL;
-            int size = strlen(filename);
-            ptr = malloc(sizeof(char) * size);
-            for (int i = 0; i < size; i++)
-                ptr[i] = filename[i];
-            ptr[size - 1] = 'a';
-            ptr[size] = '\0';
-            basic_to_asm(filename, ptr);
-            filename[size - 1] = 'o';
-            filename[size] = '\0';
-            asm_to_object(ptr, filename);
-            sc_memoryLoad(filename);
-            resetTerm();
-        }*/
-            else if (strcmp(ptr1, ".so") == 0)
+                if (strcmp(ptr1, ".sa") == 0)
+                {
+                    char *ptr = NULL;
+                    int size = strlen(filename);
+                    ptr = malloc(sizeof(char) * size);
+                    for (int i = 0; i < size; i++)
+                        ptr[i] = filename[i];
+                    ptr[size - 1] = 'o';
+                    ptr[size] = '\0';
+                    asm_to_object(filename, ptr);
+                    printf("Asm_to_obj");
+                    sc_memoryLoad(ptr);
+                    resetTerm();
+                }
+                else if (strcmp(ptr1, ".so") == 0)
                 {
                     sc_memoryLoad(filename);
                     resetTerm();
                 }
-             }
+            }
             break;
         case key_s:
             sc_memorySave("file.txt");
@@ -239,40 +222,33 @@ void printOperation()
 void keyRun()
 {
     sc_regSet(T, 0);
-    int x, y;
-    getXY(&x, &y);
     setBGColor(0);
-    x = 0;
-    y = 0;
-    coord = 0;
     instructionCounter = 0;
-    setBGColor(1);
-    sleep(1);
-    for (x = 0; x < 10; x++)
+
+    coord = 0;
+
+    while (!Cu())
     {
-        for (y = 0; y < 10; y++)
-        {
-            keyStep();
-            sleep(1);
-        }
+        coord = instructionCounter;
+        printAccumulatorValue();
+        printInstructionCounterValue();
+
+        resetTerm();
+
+        sleep(1);
     }
-    sc_regSet(T, 1);
-    instructionCounter = 0;
-    x = 0;
-    y = 0;
-    coord = 0;
+
     setBGColor(1);
     resetTerm();
 }
 void keyStep()
 {
-    Cu();
     int x, y;
     getXY(&x, &y);
-    //instructionCounter = coord;
+    Cu();
+    coord = instructionCounter;
     printAccumulatorValue();
     printInstructionCounterValue();
-    keyRight();
     resetTerm();
 }
 void keyF5()
@@ -288,7 +264,7 @@ void keyF6()
 {
     int value = 0;
     sc_memoryGet(coord, &value);
-    sc_memorySet(coord, value + 1);
+    instructionCounter = coord;
     resetTerm();
     fflush(stdout);
 }
