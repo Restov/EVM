@@ -159,7 +159,6 @@ int run()
                     ptr[size - 1] = 'o';
                     ptr[size] = '\0';
                     asm_to_object(filename, ptr);
-                    printf("Asm_to_obj");
                     sc_memoryLoad(ptr);
                     resetTerm();
                 }
@@ -224,7 +223,7 @@ void keyRun()
     sc_regSet(T, 0);
     setBGColor(0);
     instructionCounter = 0;
-
+    resetTerm();
     coord = 0;
 
     while (!Cu())

@@ -14,7 +14,6 @@ int Cu()
     if (command >= 0x30 && command <= 0x33)
     {
         Alu(command, operand);
-        return 1;
     }
     else
     {
@@ -45,7 +44,7 @@ int Cu()
                 sc_regSet(M, 1);
                 break;
             }
-            instructionCounter = operand;
+            instructionCounter = --operand;
             break;
         case JNEG:
             if (accumulator < 0)
@@ -55,7 +54,7 @@ int Cu()
                     sc_regSet(M, 1);
                     break;
                 }
-                instructionCounter = operand;
+                instructionCounter = --operand;
             }
             break;
         case JZ:
@@ -66,7 +65,7 @@ int Cu()
                     sc_regSet(M, 1);
                     break;
                 }
-                instructionCounter = operand;
+                instructionCounter = --operand;
             }
             break;
         case HALT:
@@ -81,7 +80,7 @@ int Cu()
                     sc_regSet(M, 1);
                     break;
                 }
-                instructionCounter = operand;
+                instructionCounter = --operand;
             }
             break;
         }
@@ -99,7 +98,7 @@ int Cu()
 int Alu(int command, int operand)
 {
     int value = 0;
-    sc_memoryGet(instructionCounter, &value);
+    sc_memoryGet(operand, &value);
     switch (command)
     {
     case ADD:

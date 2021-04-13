@@ -37,7 +37,7 @@ int asm_to_object(const char *filename_asm, const char *filename_object)
         else
         {
             fscanf(fasm, "%x", &encode);
-            encode = 0x4000 | (encode & 0x3FFF);
+      //      encode = 0x4000 | (encode & 0x3FFF);
         }
         sc_memorySet(address, encode);
         do
