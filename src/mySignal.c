@@ -4,7 +4,7 @@ void signalhangle(int signal) {
     int val;
     sc_regGet(T, &val);
     if (val == 0) {
-        resetTerm();
+        //resetTerm();
     }           
 }
 

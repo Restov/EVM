@@ -133,7 +133,7 @@ int run()
     signal(SIGUSR1, reset_signalhagle);
     create_timer(1);
     resetTerm();
-    char filename[64];
+
     while (key != key_q)
     {
         rk_readkey(&key);
@@ -141,33 +141,8 @@ int run()
         switch (key)
         {
         case key_l:
+            keyLoad();
 
-            printf("Enter filename: ");
-            rk_mytermregime(0, 0, 1, 1, 1);
-            fgets(filename, 63, stdin);
-            filename[strlen(filename) - 1] = 0;
-            char *ptr1 = strrchr(filename, '.');
-            if (ptr1 != NULL)
-            {
-                if (strcmp(ptr1, ".sa") == 0)
-                {
-                    char *ptr = NULL;
-                    int size = strlen(filename);
-                    ptr = malloc(sizeof(char) * size);
-                    for (int i = 0; i < size; i++)
-                        ptr[i] = filename[i];
-                    ptr[size - 1] = 'o';
-                    ptr[size] = '\0';
-                    asm_to_object(filename, ptr);
-                    sc_memoryLoad(ptr);
-                    resetTerm();
-                }
-                else if (strcmp(ptr1, ".so") == 0)
-                {
-                    sc_memoryLoad(filename);
-                    resetTerm();
-                }
-            }
             break;
         case key_s:
             sc_memorySave("file.txt");
@@ -207,6 +182,36 @@ int run()
 
     return 0;
 }
+void keyLoad()
+{
+    char filename[64];
+    printf("Enter filename: ");
+    rk_mytermregime(0, 0, 1, 1, 1);
+    fgets(filename, 63, stdin);
+    filename[strlen(filename) - 1] = 0;
+    char *ptr1 = strrchr(filename, '.');
+    if (ptr1 != NULL)
+    {
+        if (strcmp(ptr1, ".sa") == 0)
+        {
+            char *ptr = NULL;
+            int size = strlen(filename);
+            ptr = malloc(sizeof(char) * size);
+            for (int i = 0; i < size; i++)
+                ptr[i] = filename[i];
+            ptr[size - 1] = 'o';
+            ptr[size] = '\0';
+            asm_to_object(filename, ptr);
+            sc_memoryLoad(ptr);
+            resetTerm();
+        }
+        else if (strcmp(ptr1, ".so") == 0)
+        {
+            sc_memoryLoad(filename);
+            resetTerm();
+        }
+    }
+}
 void key_num(enum keys key)
 {
     int x, y;
@@ -240,7 +245,6 @@ void printOperation()
 void keyRun()
 {
     sc_regSet(T, 0);
-    setBGColor(0);
     instructionCounter = 0;
     resetTerm();
     coord = 0;
@@ -256,7 +260,7 @@ void keyRun()
         sleep(1);
     }
 
-    setBGColor(1);
+    //setBGColor(1);
     resetTerm();
 }
 void keyStep()

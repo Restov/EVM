@@ -33,10 +33,10 @@ int Cu()
             mt_gotoXY(24, 15);
             break;
         case LOAD:
-            sc_memoryGet(operand, &accumulator); 
+            sc_memoryGet(operand, &accumulator);
             break;
         case STORE:
-            sc_memorySet(operand, accumulator); 
+            sc_memorySet(operand, accumulator);
             break;
         case JUMP:
             if (operand >= SIZE || operand < 0)
@@ -85,11 +85,13 @@ int Cu()
             break;
         }
     }
-    if(instructionCounter + 1 < SIZE){
+    if (instructionCounter + 1 < SIZE)
+    {
         instructionCounter++;
     }
-    else{
-        sc_regSet(M,1);
+    else
+    {
+        sc_regSet(M, 1);
     }
 
     return 0;
