@@ -200,12 +200,31 @@ int run()
             keyLeft();
             break;
         default:
-
+            key_num(key);
             break;
         }
     }
 
     return 0;
+}
+void key_num(enum keys key)
+{
+    int x, y;
+    getXY(&x, &y);
+    if (key > 0 && key < 10)
+    {
+        int value;
+        sc_memoryGet(coord, &value);
+        if (key + value > 0xFFFF)
+        {
+            sc_regSet(P, 1);
+        }
+        else
+        {
+            sc_memorySet(coord, key + value);
+        }
+        resetTerm();
+    }
 }
 void printOperation()
 {

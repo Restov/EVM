@@ -45,6 +45,7 @@ void keyRun();
 void printOperation();
 int printOperationbox();
 void keyLoad();
+void key_num();
 int printKeys();
 int printBigChars();
 int printAll();
