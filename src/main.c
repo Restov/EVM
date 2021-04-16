@@ -1,6 +1,4 @@
 #include "include/printConsole.h"
-
-
 int main()
 {
     run();

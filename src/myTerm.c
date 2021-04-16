@@ -31,7 +31,7 @@ int mt_getscreensize(int *rows, int *cols)
     }
     else
     {
-        //printf("Ошибка получения размера экрана.\n");
+
         return -1;
     }
 }

@@ -27,8 +27,6 @@ void create_timer(unsigned int interval) {
 	nval.it_interval.tv_usec = 0;
 	nval.it_value.tv_sec = 1;
 	nval.it_value.tv_usec = 0;
-
-	/* Запускаем таймер */
 	setitimer (ITIMER_REAL, &nval, &oval);
 }
 

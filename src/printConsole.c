@@ -89,10 +89,7 @@ int setBGColor(int ind)
 }
 int resetBG()
 {
-    setBGColor(0);
     setBGColor(1);
-    fflush(stdout);
-
     return 0;
 }
 int resetTerm()
@@ -128,8 +125,6 @@ int run()
     accumulator = 0;
     coord = 0;
     printAll();
-    printAccumulatorValue();
-    printInstructionCounterValue();
     signal(SIGUSR1, reset_signalhagle);
     create_timer(1);
     resetTerm();
@@ -145,7 +140,7 @@ int run()
 
             break;
         case key_s:
-            sc_memorySave("file.txt");
+            keySave();
             break;
         case key_r:
             keyRun();
@@ -181,6 +176,15 @@ int run()
     }
 
     return 0;
+}
+void keySave()
+{
+    char file[35] = {0};
+    mt_gotoXY(25, 1);
+    printf("Input filename: ");
+    scanf("%s", file);
+    sc_memorySave(file);
+    resetTerm();
 }
 void keyLoad()
 {
@@ -259,8 +263,6 @@ void keyRun()
 
         sleep(1);
     }
-
-    //setBGColor(1);
     resetTerm();
 }
 void keyStep()
@@ -440,6 +442,41 @@ int printOperationbox()
     return 0;
 }
 
+void printComs()
+{
+    bc_box(1, BOX_COLUMN_MEMORY + 25, 22, MINI_BOX_COLUMN+15);
+    mt_gotoXY(2, 92);
+    printf(" Commands: ");
+    mt_gotoXY(4, 90);
+    printf("READ 0x10   READ");
+    mt_gotoXY(5, 90);
+    printf("WRITE 0x11  WRITE");
+    mt_gotoXY(6, 90);
+    printf("LOAD 0x20   ACC = OP");
+    mt_gotoXY(7, 90);
+    printf("STORE 0x21  CELL = ACC");
+    mt_gotoXY(8, 90);
+    printf("ADD 0x30    ACC+CELL");
+    mt_gotoXY(9, 90);
+    printf("SUB 0x31    ACC-CELL");
+    mt_gotoXY(10, 90);
+    printf("DIVIDE 0x32 ACC/CELL");
+    mt_gotoXY(11, 90);
+    printf("MUL 0x33    ACC*CELL");
+    mt_gotoXY(12, 90);
+    printf("JUMP 0x40   GOTO");
+    mt_gotoXY(13, 90);
+    printf("JNEG 0x41   IF < 0 GOTO");
+    mt_gotoXY(14, 90);
+    printf("JZ 0x42     IF = 0 GOTO");
+    mt_gotoXY(15, 90);
+    printf("HALT 0x43   STOP");
+    mt_gotoXY(16, 90);
+    printf("JNP 0x59    ODD");
+    mt_gotoXY(17, 90);
+    printf("JNS 0x55    EVEN");
+}
+
 int printKeys()
 {
     int column = 37;
@@ -564,7 +601,9 @@ int printAll()
     printOperationbox();
     printAccumulator();
     printFlags();
-    //printBigChars();
     printKeys();
+    printAccumulatorValue();
+    printInstructionCounterValue();
+    printComs();
     return 0;
 }

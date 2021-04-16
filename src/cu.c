@@ -57,6 +57,17 @@ int Cu()
                 instructionCounter = --operand;
             }
             break;
+        case JNS:
+            if (accumulator > 0)
+            {
+                if (operand >= SIZE || operand < 0)
+                {
+                    sc_regSet(M, 1);
+                    break;
+                }
+                instructionCounter = --operand;
+            }
+            break;
         case JZ:
             if (accumulator == 0)
             {

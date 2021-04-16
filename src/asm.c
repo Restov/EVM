@@ -15,6 +15,7 @@ int cmd_search(const char *command)
     else if (strcmp(command, "JZ")==0) return 0x42;
     else if (strcmp(command, "HALT")==0) return 0x43;
     else if (strcmp(command, "JNP")==0) return 0x59;
+    else if (strcmp(command, "JNS")==0) return 0x55;
     return -1;
 }
 
@@ -37,7 +38,6 @@ int asm_to_object(const char *filename_asm, const char *filename_object)
         else
         {
             fscanf(fasm, "%x", &encode);
-      //      encode = 0x4000 | (encode & 0x3FFF);
         }
         sc_memorySet(address, encode);
         do
