@@ -126,9 +126,7 @@ int run()
     coord = 0;
     printAll();
     signal(SIGUSR1, reset_signalhagle);
-    create_timer(1);
     resetTerm();
-
     while (key != key_q)
     {
         rk_readkey(&key);
@@ -143,7 +141,12 @@ int run()
             keySave();
             break;
         case key_r:
-            keyRun();
+            sc_regSet(T, 0);
+            instructionCounter = 0;
+            coord = 0;
+            resetTerm();
+            create_timer(1);
+            //keyRun();
             break;
         case key_tt:
             keyStep();
@@ -444,7 +447,7 @@ int printOperationbox()
 
 void printComs()
 {
-    bc_box(1, BOX_COLUMN_MEMORY + 25, 22, MINI_BOX_COLUMN+15);
+    bc_box(1, BOX_COLUMN_MEMORY + 25, 22, MINI_BOX_COLUMN + 15);
     mt_gotoXY(2, 92);
     printf(" Commands: ");
     mt_gotoXY(4, 90);

@@ -20,11 +20,13 @@ int Cu()
         switch (command)
         {
         case READ:
+            //pause();
             mt_gotoXY(24, 15);
             printf("Enter value: ");
             scanf("%d", &value);
             sc_memorySet(operand, value);
             mt_gotoXY(24, 15);
+            //raise(SIGALRM);
             break;
         case WRITE:
             mt_gotoXY(24, 15);
@@ -99,6 +101,7 @@ int Cu()
     if (instructionCounter + 1 < SIZE)
     {
         instructionCounter++;
+        coord = instructionCounter;
     }
     else
     {
