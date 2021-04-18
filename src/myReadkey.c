@@ -2,7 +2,7 @@
 
 int rk_readkey(enum keys *key)
 {
-    rk_mytermregime(1, 0, 1, 1, 1);
+    rk_mytermregime(1, 0, 1, 1, 0);
     char buff[8] = {0};
     read(STDIN_FILENO, buff, 8);
     if (strcmp(buff, "\E[A") == 0)

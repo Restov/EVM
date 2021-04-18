@@ -14,7 +14,7 @@ int Cu()
     if (operand >= SIZE || operand < 0)
     {
         sc_regSet(M, 1);
-        sc_regSet(T, 0);
+        sc_regSet(T, 1);
         return 1;
     }
     if (command >= 0x30 && command <= 0x33)
@@ -28,8 +28,11 @@ int Cu()
         case READ:
             mt_gotoXY(24, 15);
             //read_console(&value);
+            //rk_mytermregime(0, 0, 1, 1, 1);
+            rk_mytermregime(1, 0, 1, 0, 0);
             printf("Enter: ");
             scanf("%X", &value);
+            rk_mytermregime(1, 0, 1, 1, 0);
             if (value > 0xFFFF)
             {
                 sc_regSet(P, 1);
@@ -45,7 +48,8 @@ int Cu()
         case WRITE:
             mt_gotoXY(24, 15);
             sc_memoryGet(operand, &value);
-            printf("%ls\n", &value);
+            printf("%d\n", value);
+            sleep(1);
             mt_gotoXY(24, 15);
             break;
         case LOAD:
