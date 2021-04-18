@@ -16,6 +16,7 @@ int cmd_search(const char *command)
     else if (strcmp(command, "HALT")==0) return 0x43;
     else if (strcmp(command, "JNP")==0) return 0x59;
     else if (strcmp(command, "JNS")==0) return 0x55;
+    else if (strcmp(command, "NOT")==0) return 0x51;
     return -1;
 }
 

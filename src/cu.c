@@ -83,6 +83,10 @@ int Cu()
             sc_regSet(T, 1);
             return 0;
             break;
+        case NOT:
+            value = ~accumulator;
+            sc_memorySet(operand,value);
+            break;
         case JNP:
             if ((accumulator % 2) != 0)
             {

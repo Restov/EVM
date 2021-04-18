@@ -463,6 +463,8 @@ void printComs()
     printf("JNP 0x59    ODD");
     mt_gotoXY(17, 90);
     printf("JNS 0x55    EVEN");
+    mt_gotoXY(18, 90);
+    printf("NOT 0x51    INVERSE");
 }
 
 int printKeys()
