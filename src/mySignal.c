@@ -16,18 +16,14 @@ void reset_signalhagle(int signal){
     coord = 0;
     setBGColor(1);
     sc_regInit();
+    sc_regSet(T, 1);
     sc_memoryInit();
     resetTerm();
 }
 
-void create_timer(unsigned int interval) {
-    struct itimerval nval, oval;
-	signal (SIGALRM, signalhangle);
-
-	nval.it_interval.tv_sec = interval;
-	nval.it_interval.tv_usec = 0;
-	nval.it_value.tv_sec = 1;
-	nval.it_value.tv_usec = 0;
-	setitimer (ITIMER_REAL, &nval, &oval);
+void create_timer(double interval) {
+    struct itimerval nval;
+    nval.it_value.tv_sec = nval.it_interval.tv_sec = (long)interval;
+    nval.it_value.tv_usec = nval.it_interval.tv_usec = (long)((interval - (long)interval) * 1000000);
+    setitimer (ITIMER_REAL, &nval, NULL);
 }
-

@@ -10,6 +10,6 @@
 
 void signalhangle(int signal);
 void reset_signalhagle(int signal);
-void create_timer(unsigned int interval);
+void create_timer(double interval);
 
 #endif

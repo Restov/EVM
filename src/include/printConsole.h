@@ -23,6 +23,7 @@ int coord;
 int accumulator;
 extern int instructionCounter;
 int printMemory();
+void read_console(int *value);
 void getXY(int *x, int *y);
 int printInstructionCounter();
 int printAccumulatorValue();

@@ -11,6 +11,12 @@ int Cu()
         sc_regSet(T, 0);
         return 1;
     }
+    if (operand >= SIZE || operand < 0)
+    {
+        sc_regSet(M, 1);
+        sc_regSet(T, 0);
+        return 1;
+    }
     if (command >= 0x30 && command <= 0x33)
     {
         Alu(command, operand);
@@ -20,14 +26,22 @@ int Cu()
         switch (command)
         {
         case READ:
-            //pause();
             mt_gotoXY(24, 15);
-            printf("Enter value: ");
-            scanf("%d", &value);
-            sc_memorySet(operand, value);
-            mt_gotoXY(24, 15);
-            //raise(SIGALRM);
-            break;
+            //read_console(&value);
+            printf("Enter: ");
+            scanf("%X", &value);
+            if (value > 0xFFFF)
+            {
+                sc_regSet(P, 1);
+                break;
+            }
+            else
+            {
+                //rk_mytermregime(1, 0, 1, 1, 1);
+                sc_memorySet(operand, value);
+                mt_gotoXY(24, 15);
+                break;
+            }
         case WRITE:
             mt_gotoXY(24, 15);
             sc_memoryGet(operand, &value);
@@ -41,58 +55,33 @@ int Cu()
             sc_memorySet(operand, accumulator);
             break;
         case JUMP:
-            if (operand >= SIZE || operand < 0)
-            {
-                sc_regSet(M, 1);
-                break;
-            }
             instructionCounter = --operand;
             break;
         case JNEG:
             if (accumulator < 0)
             {
-                if (operand >= SIZE || operand < 0)
-                {
-                    sc_regSet(M, 1);
-                    break;
-                }
                 instructionCounter = --operand;
             }
             break;
         case JNS:
             if (accumulator > 0)
             {
-                if (operand >= SIZE || operand < 0)
-                {
-                    sc_regSet(M, 1);
-                    break;
-                }
                 instructionCounter = --operand;
             }
             break;
         case JZ:
             if (accumulator == 0)
             {
-                if (operand >= SIZE || operand < 0)
-                {
-                    sc_regSet(M, 1);
-                    break;
-                }
                 instructionCounter = --operand;
             }
             break;
         case HALT:
-            sc_regSet(T, 0);
-            return 1;
+            sc_regSet(T, 1);
+            return 0;
             break;
         case JNP:
             if ((accumulator % 2) != 0)
             {
-                if (operand >= SIZE || operand < 0)
-                {
-                    sc_regSet(M, 1);
-                    break;
-                }
                 instructionCounter = --operand;
             }
             break;

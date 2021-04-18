@@ -24,9 +24,7 @@ int mt_getscreensize(int *rows, int *cols)
     struct winsize ws;
     if (!ioctl(1, TIOCGWINSZ, &ws))
     {
-        //printf("\nПолучен размер экрана.\n");
         *rows = ws.ws_row, *cols = ws.ws_col;
-        //printf("Число строк–%d\nЧисло столбцов–%d\n", *rows, *cols);
         return 0;
     }
     else

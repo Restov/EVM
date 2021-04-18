@@ -116,6 +116,12 @@ int resetTerm()
     fflush(stdout);
     return 0;
 }
+void read_console(int *value)
+{
+    printf("Enter: ");
+    rk_mytermregime(0, 0, 1, 1, 1);
+    scanf("%X", value);
+}
 int run()
 {
     enum keys key;
@@ -124,60 +130,67 @@ int run()
     sc_regInit();
     accumulator = 0;
     coord = 0;
-    printAll();
     signal(SIGUSR1, reset_signalhagle);
-    resetTerm();
-    while (key != key_q)
+    signal (SIGALRM, signalhangle);
+    printAll();
+    sc_regSet(T, 1);
+    while (1)
     {
+        resetTerm();
         rk_readkey(&key);
-
-        switch (key)
+        int val;
+        if (key == key_q)
         {
-        case key_l:
-            keyLoad();
-
-            break;
-        case key_s:
-            keySave();
-            break;
-        case key_r:
-            sc_regSet(T, 0);
-            instructionCounter = 0;
-            coord = 0;
-            resetTerm();
-            create_timer(1);
-            //keyRun();
-            break;
-        case key_tt:
-            keyStep();
-            break;
-        case key_i:
-            raise(SIGUSR1);
-            break;
-        case key_f5:
-            keyF5();
-            break;
-        case key_f6:
-            keyF6();
-            break;
-        case key_up:
-            keyUp();
-            break;
-        case key_down:
-            keyDown();
-            break;
-        case key_right:
-            keyRight();
-            break;
-        case key_left:
-            keyLeft();
-            break;
-        default:
-            key_num(key);
             break;
         }
+        else if (!sc_regGet(T, &val) && val)
+        {
+            switch (key)
+            {
+            case key_l:
+                keyLoad();
+                break;
+            case key_s:
+                keySave();
+                break;
+            case key_r:
+                sc_regSet(T, 0);
+                instructionCounter = 0;
+                coord = 0;
+                resetTerm();
+                create_timer(0.1);
+                break;
+            case key_tt:
+                Cu();
+                break;
+            case key_i:
+                create_timer(0);
+                raise(SIGUSR1);
+                break;
+            case key_f5:
+                keyF5();
+                break;
+            case key_f6:
+                keyF6();
+                break;
+            case key_up:
+                keyUp();
+                break;
+            case key_down:
+                keyDown();
+                break;
+            case key_right:
+                keyRight();
+                break;
+            case key_left:
+                keyLeft();
+                break;
+            default:
+                key_num(key);
+                break;
+            }
+        }
     }
-
     return 0;
 }
 void keySave()
@@ -243,40 +256,11 @@ void printOperation()
     int x, y;
     getXY(&x, &y);
     int value;
-    sc_memoryGet(instructionCounter, &value);
+    sc_memoryGet(coord, &value);
     mt_gotoXY(8, 69);
     int command, operand;
     sc_commandDecode(value, &command, &operand);
     printf("+%.2X : %.2X", command, operand);
-}
-void keyRun()
-{
-    sc_regSet(T, 0);
-    instructionCounter = 0;
-    resetTerm();
-    coord = 0;
-
-    while (!Cu())
-    {
-        coord = instructionCounter;
-        printAccumulatorValue();
-        printInstructionCounterValue();
-
-        resetTerm();
-
-        sleep(1);
-    }
-    resetTerm();
-}
-void keyStep()
-{
-    int x, y;
-    getXY(&x, &y);
-    Cu();
-    coord = instructionCounter;
-    printAccumulatorValue();
-    printInstructionCounterValue();
-    resetTerm();
 }
 void keyF5()
 {
