@@ -12,7 +12,6 @@
 int mt_clrscr(void)
 {
     return printf("\E[H\E[J");
- //return printf("\E[45J\E[1;1H");
 }
 
 int mt_gotoXY(int y, int x)

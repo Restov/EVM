@@ -2,21 +2,36 @@
 
 int cmd_search(const char *command)
 {
-    if (strcmp(command, "READ")== 0) return 0x10;
-    else if (strcmp(command, "WRITE")==0) return 0x11;
-    else if (strcmp(command, "LOAD")==0) return 0x20;
-    else if (strcmp(command, "STORE")==0) return 0x21;
-    else if (strcmp(command, "ADD")==0) return 0x30;
-    else if (strcmp(command, "SUB")==0) return 0x31;
-    else if (strcmp(command, "DIVIDE")==0) return 0x32;
-    else if (strcmp(command, "MUL")==0) return 0x33;
-    else if (strcmp(command, "JUMP")==0) return 0x40;
-    else if (strcmp(command, "JNEG")==0) return 0x41;
-    else if (strcmp(command, "JZ")==0) return 0x42;
-    else if (strcmp(command, "HALT")==0) return 0x43;
-    else if (strcmp(command, "JNP")==0) return 0x59;
-    else if (strcmp(command, "JNS")==0) return 0x55;
-    else if (strcmp(command, "NOT")==0) return 0x51;
+    if (strcmp(command, "READ") == 0)
+        return 0x10;
+    else if (strcmp(command, "WRITE") == 0)
+        return 0x11;
+    else if (strcmp(command, "LOAD") == 0)
+        return 0x20;
+    else if (strcmp(command, "STORE") == 0)
+        return 0x21;
+    else if (strcmp(command, "ADD") == 0)
+        return 0x30;
+    else if (strcmp(command, "SUB") == 0)
+        return 0x31;
+    else if (strcmp(command, "DIVIDE") == 0)
+        return 0x32;
+    else if (strcmp(command, "MUL") == 0)
+        return 0x33;
+    else if (strcmp(command, "JUMP") == 0)
+        return 0x40;
+    else if (strcmp(command, "JNEG") == 0)
+        return 0x41;
+    else if (strcmp(command, "JZ") == 0)
+        return 0x42;
+    else if (strcmp(command, "HALT") == 0)
+        return 0x43;
+    else if (strcmp(command, "JNP") == 0)
+        return 0x59;
+    else if (strcmp(command, "JNS") == 0)
+        return 0x55;
+    else if (strcmp(command, "NOT") == 0)
+        return 0x51;
     return -1;
 }
 

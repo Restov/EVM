@@ -111,16 +111,18 @@ int resetTerm()
         }
         printf("\n");
     }
-    mt_gotoXY(23,1);
+    mt_gotoXY(23, 1);
     printf("Input/Output:\n");
     fflush(stdout);
     return 0;
 }
-void log_console(const char *msg) {
+void log_console(const char *msg)
+{
     strcat(io_msg, msg);
     strcat(io_msg, "\n");
 }
-void read_console_value(int addr, int *value) {
+void read_console_value(int addr, int *value)
+{
     mt_gotoXY(24, 1);
     printf("Enter: ");
     scanf("%X", value);
@@ -129,7 +131,8 @@ void read_console_value(int addr, int *value) {
     log_console(print);
 }
 
-int write_console_value(int addr, int value) {
+int write_console_value(int addr, int value)
+{
     char print[16];
     int operand = 0, com = 0;
     sc_commandDecode(value, &com, &operand);
@@ -148,7 +151,7 @@ int run()
     accumulator = 0;
     coord = 0;
     signal(SIGUSR1, reset_signalhagle);
-    signal (SIGALRM, signalhangle);
+    signal(SIGALRM, signalhangle);
     printAll();
     sc_regSet(T, 1);
     while (1)

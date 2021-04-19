@@ -43,9 +43,9 @@ int Cu()
             }
         case WRITE:
             temp = write_console_value(operand, value);
-            mt_gotoXY(27, 1);
-            printf("Address = %d, value = %0X", operand, temp); //решить проблему с врайтом
-            sleep(2);
+            mt_gotoXY(25, 1);
+            printf("Address = %d, value = %d\n", operand, temp);
+            sleep(5);
             break;
         case LOAD:
             sc_memoryGet(operand, &accumulator);
@@ -80,7 +80,7 @@ int Cu()
             break;
         case NOT:
             value = ~accumulator;
-            sc_memorySet(operand,value);
+            sc_memorySet(operand, value);
             break;
         case JNP:
             if ((accumulator % 2) != 0)
