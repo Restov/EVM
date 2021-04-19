@@ -22,8 +22,11 @@
 int coord;
 int accumulator;
 extern int instructionCounter;
+char io_msg[1024];
+void log_console(const char *msg);
+void read_console_value(int addr, int *value);
+int write_console_value(int addr, int value);
 int printMemory();
-void read_console(int *value);
 void getXY(int *x, int *y);
 int printInstructionCounter();
 int printAccumulatorValue();

@@ -111,16 +111,33 @@ int resetTerm()
         }
         printf("\n");
     }
-
-    mt_gotoXY(33, 1);
+    mt_gotoXY(23,1);
+    printf("Input/Output:\n");
     fflush(stdout);
     return 0;
 }
-void read_console(int *value)
-{
+void log_console(const char *msg) {
+    strcat(io_msg, msg);
+    strcat(io_msg, "\n");
+}
+void read_console_value(int addr, int *value) {
+    mt_gotoXY(24, 1);
     printf("Enter: ");
-    rk_mytermregime(0, 0, 1, 1, 1);
     scanf("%X", value);
+    char print[16];
+    sprintf(print, "%d<\t%0X", addr, *value);
+    log_console(print);
+}
+
+int write_console_value(int addr, int value) {
+    char print[16];
+    int operand = 0, com = 0;
+    sc_commandDecode(value, &com, &operand);
+    int tmp = 0;
+    sc_memoryGet(operand, &tmp);
+    sprintf(print, "%d>\t%0X", addr, tmp);
+    log_console(print);
+    return tmp;
 }
 int run()
 {
@@ -206,6 +223,7 @@ void keySave()
 void keyLoad()
 {
     char filename[64];
+    mt_gotoXY(24, 1);
     printf("Enter filename: ");
     rk_mytermregime(0, 0, 1, 1, 1);
     fgets(filename, 63, stdin);

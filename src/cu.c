@@ -3,6 +3,7 @@
 int Cu()
 {
     int value = 0;
+    int temp = 0;
     sc_memoryGet(instructionCounter, &value);
     int command;
     int operand;
@@ -26,12 +27,8 @@ int Cu()
         switch (command)
         {
         case READ:
-            mt_gotoXY(24, 15);
-            //read_console(&value);
-            //rk_mytermregime(0, 0, 1, 1, 1);
             rk_mytermregime(1, 0, 1, 0, 0);
-            printf("Enter: ");
-            scanf("%X", &value);
+            read_console_value(operand, &value);
             rk_mytermregime(1, 0, 1, 1, 0);
             if (value > 0xFFFF)
             {
@@ -40,17 +37,15 @@ int Cu()
             }
             else
             {
-                //rk_mytermregime(1, 0, 1, 1, 1);
                 sc_memorySet(operand, value);
-                mt_gotoXY(24, 15);
+                mt_gotoXY(24, 1);
                 break;
             }
         case WRITE:
-            mt_gotoXY(24, 15);
-            sc_memoryGet(operand, &value);
-            printf("%d\n", value);
-            sleep(1);
-            mt_gotoXY(24, 15);
+            temp = write_console_value(operand, value);
+            mt_gotoXY(27, 1);
+            printf("Address = %d, value = %0X", operand, temp); //решить проблему с врайтом
+            sleep(2);
             break;
         case LOAD:
             sc_memoryGet(operand, &accumulator);
