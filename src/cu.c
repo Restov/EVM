@@ -44,8 +44,9 @@ int Cu()
         case WRITE:
             temp = write_console_value(operand, value);
             mt_gotoXY(25, 1);
-            printf("Address = %d, value = %d\n", operand, temp);
-            sleep(5);
+            printf("%d>\t%0X\n", operand, temp);
+            //printf("Address = %d, value = %d\n", operand, temp);
+            //sleep(5);
             break;
         case LOAD:
             sc_memoryGet(operand, &accumulator);
