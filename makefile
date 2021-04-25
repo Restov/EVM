@@ -1,4 +1,4 @@
-FLAGS += -Wall -Werror 
+FLAGS += -Wall -Werror -g
 USER_DIR_S = build
 EXECUTABLE = bin/program
 DISK = bin/disk
@@ -7,7 +7,7 @@ DISK = bin/disk
 
 all: $(EXECUTABLE) $(DISK)
 
-$(EXECUTABLE): $(USER_DIR_S)/main.o $(USER_DIR_S)/libmySimpleComputer.a $(USER_DIR_S)/libbasic.a $(USER_DIR_S)/libmyTerm.a $(USER_DIR_S)/librpn.a $(USER_DIR_S)/libasm.a $(USER_DIR_S)/libmyBigChars.a $(USER_DIR_S)/libcu.a $(USER_DIR_S)/libprintConsole.a $(USER_DIR_S)/libmyReadkey.a $(USER_DIR_S)/libmySignal.a
+$(EXECUTABLE): $(USER_DIR_S)/main.o $(USER_DIR_S)/libmySimpleComputer.a $(USER_DIR_S)/libmyTerm.a $(USER_DIR_S)/librpn.a $(USER_DIR_S)/libbasic.a $(USER_DIR_S)/libasm.a $(USER_DIR_S)/libmyBigChars.a $(USER_DIR_S)/libcu.a $(USER_DIR_S)/libprintConsole.a $(USER_DIR_S)/libmyReadkey.a $(USER_DIR_S)/libmySignal.a
 	gcc $(FLAGS) -o $@ $^ -Lbuild -lmySimpleComputer -Lbuild -lmyTerm -Lbuild -lmyBigChars -Lbuild -lrpn -Lbuild -lbasic -Lbuild -lasm -Lbuild -lprintConsole -Lbuild -lmyReadkey -Lbuild -lmySignal -Lbuild -lcu
 
 $(USER_DIR_S)/main.o: src/main.c
@@ -22,12 +22,6 @@ $(USER_DIR_S)/libmySimpleComputer.a: $(USER_DIR_S)/mySimpleComputer.o
 $(USER_DIR_S)/myTerm.o: src/myTerm.c
 	gcc $(FLAGS) -c $^ -o $@
 
-$(USER_DIR_S)/rpn.o: src/rpn.c
-	gcc $(FLAGS) -c $^ -o $@
-
-$(USER_DIR_S)/basic.o: src/basic.c
-	gcc $(FLAGS) -c $^ -o $@
-
 $(USER_DIR_S)/myBigChars.o: src/myBigChars.c
 	gcc $(FLAGS) -c $^ -o $@
 
@@ -40,14 +34,20 @@ $(USER_DIR_S)/myReadkey.o: src/myReadkey.c
 $(USER_DIR_S)/mySignal.o: src/mySignal.c
 	gcc $(FLAGS) -c $^ -o $@
 
-$(USER_DIR_S)/libmyTerm.a: $(USER_DIR_S)/myTerm.o
-	ar rc $(USER_DIR_S)/libmyTerm.a $(USER_DIR_S)/myTerm.o
+$(USER_DIR_S)/rpn.o: src/rpn.c
+	gcc $(FLAGS) -c $^ -o $@
+
+$(USER_DIR_S)/basic.o: src/basic.c
+	gcc $(FLAGS) -c $^ -o $@
 
 $(USER_DIR_S)/cu.o: src/cu.c
 	gcc $(FLAGS) -c $^ -o $@
 
 $(USER_DIR_S)/asm.o: src/asm.c
 	gcc $(FLAGS) -c $^ -o $@
+
+$(USER_DIR_S)/libmyTerm.a: $(USER_DIR_S)/myTerm.o
+	ar rc $(USER_DIR_S)/libmyTerm.a $(USER_DIR_S)/myTerm.o
 
 $(USER_DIR_S)/libcu.a: $(USER_DIR_S)/cu.o
 	ar rc $(USER_DIR_S)/libcu.a $(USER_DIR_S)/cu.o

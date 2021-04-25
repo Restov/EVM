@@ -1,6 +1,6 @@
 #ifndef RPN_H
 #define RPN_H
-
+#pragma once
 #include <stdio.h>
 #include <stdlib.h>
 
