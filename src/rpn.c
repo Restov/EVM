@@ -1,5 +1,4 @@
 #include "include/rpn.h"
-
 struct stack_t *stack_push(struct stack_t *head, char a)
 {
     struct stack_t *ptr;
@@ -45,6 +44,7 @@ int get_prior(char c)
     default:
         break;
     }
+    return 0;
 }
 
 void translate_to_rpn(char *outstr, char *a)

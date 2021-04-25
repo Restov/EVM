@@ -247,6 +247,21 @@ void keyLoad()
             sc_memoryLoad(ptr);
             resetTerm();
         }
+        else if (strcmp(ptr1, ".sb") == 0)
+        {
+            char *ptr = NULL;
+            int size = strlen(filename);
+            ptr = malloc(sizeof(char) * size);
+            for (int i = 0; i < size; i++)
+                ptr[i] = filename[i];
+            ptr[size - 1] = 'a';
+            ptr[size] = '\0';
+            basic_to_asm(filename, ptr);
+            filename[size - 1] = 'o';
+            filename[size] = '\0';
+            asm_to_object(ptr, filename);
+            sc_memoryLoad(filename);
+        }
         else if (strcmp(ptr1, ".so") == 0)
         {
             sc_memoryLoad(filename);

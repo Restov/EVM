@@ -1,5 +1,5 @@
-#ifndef SCOMPUTER_RPN_H
-#define SCOMPUTER_RPN_H
+#ifndef RPN_H
+#define RPN_H
 
 #include <stdio.h>
 #include <stdlib.h>

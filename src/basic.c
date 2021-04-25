@@ -1,9 +1,5 @@
 #include "include/basic.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include "include/rpn.h"
+
 
 struct stLines {
     unsigned line_number;
@@ -293,7 +289,7 @@ int basic_to_asm(const char* filename_bas, const char* filename_asm) {
                 translate_to_rpn(rpn, exp);
                 if (strlen(rpn) > 1) {
                     char stack[100] = "\0";
-                    int pos = 0, flg = 0;
+                    int pos = 0;//, flg = 0;
 
                     for (size_t i = 0; rpn[i]; i++) {
                         if (pos > 1 && isalnum(rpn[i]) == 0) {

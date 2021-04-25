@@ -7,8 +7,8 @@ DISK = bin/disk
 
 all: $(EXECUTABLE) $(DISK)
 
-$(EXECUTABLE): $(USER_DIR_S)/main.o $(USER_DIR_S)/libmySimpleComputer.a $(USER_DIR_S)/libmyTerm.a $(USER_DIR_S)/libasm.a $(USER_DIR_S)/libmyBigChars.a $(USER_DIR_S)/libcu.a $(USER_DIR_S)/libprintConsole.a $(USER_DIR_S)/libmyReadkey.a $(USER_DIR_S)/libmySignal.a
-	gcc $(FLAGS) -o $@ $^ -Lbuild -lmySimpleComputer -Lbuild -lmyTerm -Lbuild -lmyBigChars -Lbuild -lasm -Lbuild -lprintConsole -Lbuild -lmyReadkey -Lbuild -lmySignal -Lbuild -lcu
+$(EXECUTABLE): $(USER_DIR_S)/main.o $(USER_DIR_S)/libmySimpleComputer.a $(USER_DIR_S)/libbasic.a $(USER_DIR_S)/libmyTerm.a $(USER_DIR_S)/librpn.a $(USER_DIR_S)/libasm.a $(USER_DIR_S)/libmyBigChars.a $(USER_DIR_S)/libcu.a $(USER_DIR_S)/libprintConsole.a $(USER_DIR_S)/libmyReadkey.a $(USER_DIR_S)/libmySignal.a
+	gcc $(FLAGS) -o $@ $^ -Lbuild -lmySimpleComputer -Lbuild -lmyTerm -Lbuild -lmyBigChars -Lbuild -lrpn -Lbuild -lbasic -Lbuild -lasm -Lbuild -lprintConsole -Lbuild -lmyReadkey -Lbuild -lmySignal -Lbuild -lcu
 
 $(USER_DIR_S)/main.o: src/main.c
 	gcc $(FLAGS) -c $^ -o $@
@@ -20,6 +20,12 @@ $(USER_DIR_S)/libmySimpleComputer.a: $(USER_DIR_S)/mySimpleComputer.o
 	ar rc $(USER_DIR_S)/libmySimpleComputer.a $(USER_DIR_S)/mySimpleComputer.o
 
 $(USER_DIR_S)/myTerm.o: src/myTerm.c
+	gcc $(FLAGS) -c $^ -o $@
+
+$(USER_DIR_S)/rpn.o: src/rpn.c
+	gcc $(FLAGS) -c $^ -o $@
+
+$(USER_DIR_S)/basic.o: src/basic.c
 	gcc $(FLAGS) -c $^ -o $@
 
 $(USER_DIR_S)/myBigChars.o: src/myBigChars.c
@@ -45,6 +51,12 @@ $(USER_DIR_S)/asm.o: src/asm.c
 
 $(USER_DIR_S)/libcu.a: $(USER_DIR_S)/cu.o
 	ar rc $(USER_DIR_S)/libcu.a $(USER_DIR_S)/cu.o
+
+$(USER_DIR_S)/librpn.a: $(USER_DIR_S)/rpn.o
+	ar rc $(USER_DIR_S)/librpn.a $(USER_DIR_S)/rpn.o
+
+$(USER_DIR_S)/libbasic.a: $(USER_DIR_S)/basic.o
+	ar rc $(USER_DIR_S)/libbasic.a $(USER_DIR_S)/basic.o
 
 $(USER_DIR_S)/libasm.a: $(USER_DIR_S)/asm.o
 	ar rc $(USER_DIR_S)/libasm.a $(USER_DIR_S)/asm.o
@@ -83,4 +95,3 @@ clean:
 	rm -rf $(USER_DIR_S)/*.o
 	rm -rf $(USER_DIR_S)/*.a
 	rm -rf bin/program
-
