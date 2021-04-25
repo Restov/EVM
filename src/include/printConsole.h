@@ -14,6 +14,7 @@
 #include "mySignal.h"
 #include "cu.h"
 #include "asm.h"
+#include "basic.h"
 #define BOX_ROW_MEMORY 12
 #define BOX_COLUMN_MEMORY 61
 
