@@ -342,7 +342,8 @@ int basic_to_asm(const char* filename_bas, const char* filename_asm) {
                 break;
             case 6: {
                 fscanf(fbas, "%[A-Z]", buffer);
-                if (buffer[1] != 0 || !(buffer[0] >= 'A' && buffer[0] <= 'Z')) {
+                if (buffer[1] != 0 || !(buffer[0] >= 'A' && buffer[0] <= 'Z')) // переменная от A do Z 
+                {
                     end = fail = 1;
                     break;
                 }
@@ -450,10 +451,6 @@ int basic_to_asm(const char* filename_bas, const char* filename_asm) {
                 break;
         }
         ++address;
-
-       /* if (type == 6)
-            continue;
-*/
         int ignore;
         do { ignore = fgetc(fbas); }
         while (ignore != '\n' && ignore != EOF);
