@@ -165,6 +165,7 @@ int run()
         }
         else if (!sc_regGet(T, &val) && val)
         {
+            strcpy(io_msg, "");
             switch (key)
             {
             case key_l:

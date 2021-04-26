@@ -107,13 +107,12 @@ int command_type(const char *cmd) {
 }
 
 unsigned variable_id(const struct stVariables *vars, unsigned max, char var) { // существует ли переменная с таким именем
-    unsigned id = 0;
-    for (; id < max; ++id)
+    for (unsigned id = 0; id < max; ++id)
         if (vars[id].name == var)
             return id;
-    return max;
+    return max; 
 }
-
+// рег переменной
 #define getVarID(toID, varName) \
 if (isdigit(varName)) { \
     toID = var_id; \
@@ -451,6 +450,9 @@ int basic_to_asm(const char* filename_bas, const char* filename_asm) {
                 break;
         }
         ++address;
+        if (type == 6)
+            continue;
+
         int ignore;
         do { ignore = fgetc(fbas); }
         while (ignore != '\n' && ignore != EOF);
