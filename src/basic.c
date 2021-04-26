@@ -92,7 +92,7 @@ int command_type(const char *cmd) {
         return 1;
     if (!strcmp(cmd, "INPUT"))
         return 2;
-    if (!strcmp(cmd, "OUTPUT"))
+    if (!strcmp(cmd, "PRINT"))
         return 3;
     if (!strcmp(cmd, "GOTO"))
         return 4;
@@ -102,10 +102,11 @@ int command_type(const char *cmd) {
         return 6;
     if (!strcmp(cmd, "END"))
         return 7;
+    
     return 0;
 }
 
-unsigned variable_id(const struct stVariables *vars, unsigned max, char var) {
+unsigned variable_id(const struct stVariables *vars, unsigned max, char var) { // существует ли переменная с таким именем
     unsigned id = 0;
     for (; id < max; ++id)
         if (vars[id].name == var)
@@ -137,32 +138,30 @@ int basic_to_asm(const char* filename_bas, const char* filename_asm) {
 
     char *asm_code = (char *) malloc(100 * 16);
     asm_code[0] = 0;
-    struct stLines *lines = (struct stLines *) malloc(sizeof(*lines) * 100);
+    struct stLines *lines = (struct stLines *) malloc(sizeof(*lines) * 100); // массив соответствия строк
     struct stVariables *var = (struct stVariables *) malloc(sizeof(*var) * 52);
     struct stGotoConflict *_goto = (struct stGotoConflict *) malloc(sizeof(*_goto) * 100);
 
     char *buffer = (char *) malloc(128);
-    unsigned address = 0;
-    unsigned line_id = 0;
+    unsigned address = 0; // номер строки в ассемблере
     unsigned goto_id = 0;
-    unsigned var_id = 0;
-    unsigned line = 0;
-    char fail = 0, end = 0, tmp_var = 'a';
+    unsigned var_id = 0; // текущая переменная в программе
+    unsigned line = 0; // текущий номер строки basic (10/20/30)
+    unsigned line_id = 0; // её айди в массиве lines
+    char fail = 0, end = 0, tmp_var/*для инициализаций чисел которые не являются переменными*/ = 'a';
 
     //A-Z - basic variables
     //a-z - temp variables
 
     while (end == 0 && fscanf(fbas, "%u %[A-Z] ", &line, buffer) != 0) {
-        if (line_id != 0 && line <= lines[line_id].line_number) { //?????
+        if (line_id != 0 && line <= lines[line_id].line_number) { // проверка что строки идут по возрастанию
             end = fail = 1;
             break;
         }
         int type = command_type(buffer);
-
         lines[line_id].line_number = line;
-        lines[line_id].start_address = address;
+        lines[line_id].start_address = address;  // начало строки basic в assembler
         ++line_id;
-
         type_check:
         switch (type) {
             case 0:
@@ -208,10 +207,9 @@ int basic_to_asm(const char* filename_bas, const char* filename_asm) {
                 sprintf(buffer, "%02u JUMP ", address);
                 strcat(asm_code, buffer);
                 fscanf(fbas, "%u", &line);
-                if (line > lines[line_id - 1].line_number) {
+                if (line > lines[line_id - 1].line_number)  {
                     _goto[goto_id].goto_line = line;
                     _goto[goto_id].instratuction_address = strlen(asm_code);
-                    _goto[goto_id].calc = 0;
                     strcat(asm_code, "00\n");
                     ++goto_id;
 
@@ -310,7 +308,6 @@ int basic_to_asm(const char* filename_bas, const char* filename_asm) {
                         address += 3;
                         _goto[goto_id].goto_line = line + 1;
                         _goto[goto_id].instratuction_address = strlen(asm_code) + 29;
-                        _goto[goto_id].calc = 1;
                         ++goto_id;
                         break;
                     case '>':
@@ -322,7 +319,6 @@ int basic_to_asm(const char* filename_bas, const char* filename_asm) {
                         address += 3;
                         _goto[goto_id].goto_line = line + 1;
                         _goto[goto_id].instratuction_address = strlen(asm_code) + 29;
-                        _goto[goto_id].calc = 1;
                         ++goto_id;
                         break;
                     default:
@@ -335,7 +331,6 @@ int basic_to_asm(const char* filename_bas, const char* filename_asm) {
                         address += 4;
                         _goto[goto_id].goto_line = line + 1;
                         _goto[goto_id].instratuction_address = strlen(asm_code) + 38;
-                        _goto[goto_id].calc = 1;
                         ++goto_id;
                         break;
                 }
@@ -358,8 +353,7 @@ int basic_to_asm(const char* filename_bas, const char* filename_asm) {
                 translate_to_rpn(rpn, exp);
                 if (strlen(rpn) > 1) {
                     char stack[100] = "\0";
-                    int pos = 0;//, flg = 0;
-
+                    int pos = 0;
                     for (size_t i = 0; rpn[i]; i++) {
                         if (pos > 1 && isalnum(rpn[i]) == 0) {
 
@@ -406,7 +400,7 @@ int basic_to_asm(const char* filename_bas, const char* filename_asm) {
                     int id;
                     getVarID(id, toVar);
                     sprintf(buffer, "%02u STORE %02u\n", address, var[id].address);
-                    strcat(asm_code, buffer);
+                    strcat(asm_code, buffer); // LOAD n STORE и отдельная ячейка памяти для вывода из аккума
                 } else {
                     int id = var_id;
                     if (isdigit(rpn[0])) {
@@ -457,9 +451,9 @@ int basic_to_asm(const char* filename_bas, const char* filename_asm) {
         }
         ++address;
 
-        if (type == 6)
+       /* if (type == 6)
             continue;
-
+*/
         int ignore;
         do { ignore = fgetc(fbas); }
         while (ignore != '\n' && ignore != EOF);

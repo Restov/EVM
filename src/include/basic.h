@@ -4,7 +4,8 @@
 #include <string.h>
 #include <ctype.h>
 #include "rpn.h"
-
+#include "myTerm.h"
+#include <unistd.h>
 struct stLines {
     unsigned line_number;
     unsigned start_address;
@@ -19,7 +20,6 @@ struct stVariables {
 struct stGotoConflict {
     unsigned instratuction_address;
     unsigned goto_line;
-    char calc;
 };
 
 int command_type(const char *cmd);
