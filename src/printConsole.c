@@ -278,7 +278,7 @@ void key_num(enum keys key)
     {
         int value;
         sc_memoryGet(coord, &value);
-        if (key + value > 0xFFFF)
+        if (key + value > 0x3FFF)
         {
             sc_regSet(P, 1);
         }

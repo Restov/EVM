@@ -30,7 +30,7 @@ int Cu()
             rk_mytermregime(1, 0, 1, 0, 0);
             read_console_value(operand, &value);
             rk_mytermregime(1, 0, 1, 1, 0);
-            if (value > 0xFFFF)
+            if (value > 0x3FFF)
             {
                 sc_regSet(P, 1);
                 break;
@@ -45,8 +45,6 @@ int Cu()
             temp = write_console_value(operand, value);
             mt_gotoXY(25, 1);
             printf("%d>\t%0X\n", operand, temp);
-            //printf("Address = %d, value = %d\n", operand, temp);
-            //sleep(5);
             break;
         case LOAD:
             sc_memoryGet(operand, &accumulator);
@@ -111,7 +109,7 @@ int Alu(int command, int operand)
     switch (command)
     {
     case ADD:
-        if (accumulator + value > 0xFFFF)
+        if (accumulator + value > 0x3FFF)
         {
             sc_regSet(P, 1);
             break;
@@ -119,7 +117,7 @@ int Alu(int command, int operand)
         accumulator += value;
         break;
     case SUB:
-        if (accumulator - value < -0xFFFF)
+        if (accumulator - value < -0x3FFF)
         {
             sc_regSet(P, 1);
             break;
@@ -135,7 +133,7 @@ int Alu(int command, int operand)
         accumulator /= value;
         break;
     case MUL:
-        if (accumulator * value > 0xFFFF)
+        if (accumulator * value > 0x3FFF)
         {
             sc_regSet(P, 1);
             break;

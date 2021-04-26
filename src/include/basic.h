@@ -3,7 +3,6 @@
 #pragma once
 #include <string.h>
 #include <ctype.h>
-#include "rpn.h"
 #include "myTerm.h"
 #include <unistd.h>
 
