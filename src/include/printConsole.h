@@ -51,7 +51,6 @@ void printOperation();
 int printOperationbox();
 void keyLoad();
 void key_num();
-void printComs();
 void keyLoad();
 void keySave();
 int printKeys();

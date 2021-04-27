@@ -467,42 +467,6 @@ int printOperationbox()
     return 0;
 }
 
-void printComs()
-{
-    bc_box(1, BOX_COLUMN_MEMORY + 25, 22, MINI_BOX_COLUMN + 15);
-    mt_gotoXY(2, 92);
-    printf(" Commands: ");
-    mt_gotoXY(4, 90);
-    printf("READ 0x10   READ");
-    mt_gotoXY(5, 90);
-    printf("WRITE 0x11  WRITE");
-    mt_gotoXY(6, 90);
-    printf("LOAD 0x20   ACC = OP");
-    mt_gotoXY(7, 90);
-    printf("STORE 0x21  CELL = ACC");
-    mt_gotoXY(8, 90);
-    printf("ADD 0x30    ACC+CELL");
-    mt_gotoXY(9, 90);
-    printf("SUB 0x31    ACC-CELL");
-    mt_gotoXY(10, 90);
-    printf("DIVIDE 0x32 ACC/CELL");
-    mt_gotoXY(11, 90);
-    printf("MUL 0x33    ACC*CELL");
-    mt_gotoXY(12, 90);
-    printf("JUMP 0x40   GOTO");
-    mt_gotoXY(13, 90);
-    printf("JNEG 0x41   IF < 0 GOTO");
-    mt_gotoXY(14, 90);
-    printf("JZ 0x42     IF = 0 GOTO");
-    mt_gotoXY(15, 90);
-    printf("HALT 0x43   STOP");
-    mt_gotoXY(16, 90);
-    printf("JNP 0x59    ODD");
-    mt_gotoXY(17, 90);
-    printf("JNS 0x55    EVEN");
-    mt_gotoXY(18, 90);
-    printf("NOT 0x51    INVERSE");
-}
 
 int printKeys()
 {
@@ -545,12 +509,12 @@ int printCaseBig()
 
     if (value < 0)
     {
-        bc_printbigchar(bcintm, 13, 2, BLACK, RED);
+        bc_printbigchar(bcintm, 13, 2, BLACK, BLUE);
         value *= -1;
     }
     else
     {
-        bc_printbigchar(bcintp, 13, 2, BLACK, RED);
+        bc_printbigchar(bcintp, 13, 2, BLACK, BLUE);
     }
 
     for (int i = 0; i < 4; ++i)
@@ -570,52 +534,52 @@ int printBigChars(int val, int k)
     switch (val)
     {
     case 0:
-        bc_printbigchar(bcint0, 13, k, BLACK, RED);
+        bc_printbigchar(bcint0, 13, k, BLACK, BLUE);
         break;
     case 1:
-        bc_printbigchar(bcint1, 13, k, BLACK, RED);
+        bc_printbigchar(bcint1, 13, k, BLACK, BLUE);
         break;
     case 2:
-        bc_printbigchar(bcint2, 13, k, BLACK, RED);
+        bc_printbigchar(bcint2, 13, k, BLACK, BLUE);
         break;
     case 3:
-        bc_printbigchar(bcint3, 13, k, BLACK, RED);
+        bc_printbigchar(bcint3, 13, k, BLACK, BLUE);
         break;
     case 4:
-        bc_printbigchar(bcint4, 13, k, BLACK, RED);
+        bc_printbigchar(bcint4, 13, k, BLACK, BLUE);
         break;
     case 5:
-        bc_printbigchar(bcint5, 13, k, BLACK, RED);
+        bc_printbigchar(bcint5, 13, k, BLACK, BLUE);
         break;
     case 6:
-        bc_printbigchar(bcint6, 13, k, BLACK, RED);
+        bc_printbigchar(bcint6, 13, k, BLACK, BLUE);
         break;
     case 7:
-        bc_printbigchar(bcint7, 13, k, BLACK, RED);
+        bc_printbigchar(bcint7, 13, k, BLACK, BLUE);
         break;
     case 8:
-        bc_printbigchar(bcint8, 13, k, BLACK, RED);
+        bc_printbigchar(bcint8, 13, k, BLACK, BLUE);
         break;
     case 9:
-        bc_printbigchar(bcint9, 13, k, BLACK, RED);
+        bc_printbigchar(bcint9, 13, k, BLACK, BLUE);
         break;
     case 10:
-        bc_printbigchar(bcintA, 13, k, BLACK, RED);
+        bc_printbigchar(bcintA, 13, k, BLACK, BLUE);
         break;
     case 11:
-        bc_printbigchar(bcintB, 13, k, BLACK, RED);
+        bc_printbigchar(bcintB, 13, k, BLACK, BLUE);
         break;
     case 12:
-        bc_printbigchar(bcintC, 13, k, BLACK, RED);
+        bc_printbigchar(bcintC, 13, k, BLACK, BLUE);
         break;
     case 13:
-        bc_printbigchar(bcintD, 13, k, BLACK, RED);
+        bc_printbigchar(bcintD, 13, k, BLACK, BLUE);
         break;
     case 14:
-        bc_printbigchar(bcintE, 13, k, BLACK, RED);
+        bc_printbigchar(bcintE, 13, k, BLACK, BLUE);
         break;
     case 15:
-        bc_printbigchar(bcintF, 13, k, BLACK, RED);
+        bc_printbigchar(bcintF, 13, k, BLACK, BLUE);
         break;
     }
     return 0;
@@ -631,6 +595,5 @@ int printAll()
     printKeys();
     printAccumulatorValue();
     printInstructionCounterValue();
-    printComs();
     return 0;
 }
