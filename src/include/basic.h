@@ -2,6 +2,7 @@
 #define BASIC_H
 #pragma once
 #include <string.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include "myTerm.h"
 #include <unistd.h>
